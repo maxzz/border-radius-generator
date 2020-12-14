@@ -1,9 +1,13 @@
 {
-  "name": "simple-border-radius",
+  "name": "border-radius-generator",
   "version": "0.0.0",
+  "description": "Simplest border-radius generator with Vue.js Composition API",
+  "license": "MIT",
   "scripts": {
     "dev": "vite",
-    "build": "vite build"
+    "build": "vite build",
+    "predeploy": "rm -rf dist && yarn build",
+    "deploy": "gh-pages -d dist"
   },
   "dependencies": {
     "vue": "^3.0.4"
