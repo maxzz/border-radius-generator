@@ -5,10 +5,9 @@
         <div class="blob-wrap">
             <div v-for="item of [0,1,2,3]" :key="item" class="blob-show2" :style="{
                 borderRadius: generated,
-                transform: `scale(${1 - .2 * item})`
+                transform: `scale(${1 - .1 * item})  translate(${20 * item}px, ${20 * item}px)`
                 }"></div>
         </div>
-
 
         <input type="button" value="Generate" @click="onGenerate">
         <input :value="generatedOutput" readonly>
