@@ -73,5 +73,10 @@
         height: 400px;
         background-color: red;
         transition: 1s border-radius;
+
+        border-top: 5px solid hsl(120, 100%, 25%);
+        border-right: 5px solid hsl(120, 100%, 50%);
+        border-bottom: 5px solid hsl(120, 100%, 25%);
+        border-left: 5px solid hsl(120, 100%, 50%);
     }
 </style>
