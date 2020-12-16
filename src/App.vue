@@ -1,6 +1,15 @@
 <template>
     <main>
-        <div class="blob-show" :style="{borderRadius: generated}"></div>
+        <!-- <div class="blob-show" :style="{borderRadius: generated}"></div> -->
+
+        <div class="blob-wrap">
+            <div v-for="item of [0,1,2,3]" :key="item" class="blob-show2" :style="{
+                borderRadius: generated,
+                transform: `scale(${1 - .2 * item})`
+                }"></div>
+        </div>
+
+
         <input type="button" value="Generate" @click="onGenerate">
         <input :value="generatedOutput" readonly>
     </main>
@@ -79,4 +88,28 @@
         border-bottom: 5px solid hsl(120, 100%, 25%);
         border-left: 5px solid hsl(120, 100%, 50%);
     }
+
+    .blob-wrap {
+        position: relative;
+        width: 400px;
+        height: 400px;
+    }
+
+    .blob-show2 {
+        position: absolute;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+
+        background-color: oldlace;
+        transition: 1s border-radius;
+
+        border-top: 15px solid hsl(0, 75%, 50%);
+        border-right: 15px solid hsl(90, 75%, 50%);
+        border-bottom: 15px solid hsl(180, 75%, 50%);
+        border-left: 15px solid hsl(270, 75%, 50%);
+    }
+
+
 </style>
