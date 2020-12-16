@@ -2,7 +2,7 @@
     <main>
         <!-- <div class="blob-show blob-borders-0" :style="{borderRadius: generatedCss}"></div> -->
 
-        <div class="blob-wrap">
+        <div class="blob-wrap" :style="{'--border-width': `${options.borderWidth}px`}">
             <div v-for="item of Number(options.shapes)" :key="item" class="blob-show2" 
                 :style="{
                     borderRadius: generatedCss,
@@ -19,13 +19,21 @@
         <input type="text" :value="generatedTxt" readonly>
 
         <div class="control-row">
-            <span>Shift</span>
-            <label>X: <input type="range"></label>
-            <label>Y: <input type="range"></label>
+            <span>Shift:</span>
+            <label>X: <input type="range" min="-50" max="50" step="1" v-model="options.shiftX">{{options.shiftX}}</label>
+            <label>Y: <input type="range" min="-50" max="50" step="1" v-model="options.shiftY">{{options.shiftY}}</label>
         </div>
 
         <div class="control-row">
             <label>N shapes: <input type="range" min="1" max="20" step="1" v-model="options.shapes">{{options.shapes}}</label>
+        </div>
+
+        <div class="control-row">
+            <label>Scale: <input type="range" min=".001" max="2" step=".001" v-model="options.scale">{{options.scale}}</label>
+        </div>
+
+        <div class="control-row">
+            <label>Boder: <input type="range" min="1" max="40" step="1" v-model="options.borderWidth">{{options.borderWidth}}</label>
         </div>
 
         <div class="control-row">
@@ -58,13 +66,15 @@
 
     export default {
         setup() {
-            const generatedCss = ref(generateShape());
+            const generatedCss = ref('23% 77% 82% 18% / 59% 21% 79% 41%'); // ref(generateShape());
             const generatedTxt = computed(() => generatedCss.value ? `border-radius: ${generatedCss.value}` : '');
 
             const options = reactive({
                 shapes: 3,
-                centerX: 0,
-                centerY: 0,
+                borderWidth: 1,
+                scale: .1,
+                shiftX: 20,
+                shiftY: 20,
                 showBorder: true,
             });
 
@@ -74,7 +84,7 @@
 
             function getItemTransform(num) {
                 let idx = num - 1;
-                return `scale(${1 - .1 * idx})  translate(${20 * idx}px, ${20 * idx}px)`;
+                return `scale(${1 - options.scale * idx})  translate(${options.shiftX * idx}px, ${options.shiftY * idx}px)`;
             }
 
             function onGenerate() {
@@ -142,17 +152,18 @@
         border-left: 5px solid hsl(120, 100%, 50%);
     }
 
+    .blob-borders {
+        border-top: var(--border-width) solid hsl(0, 75%, 50%);
+        border-right: var(--border-width) solid hsl(90, 75%, 50%);
+        border-bottom: var(--border-width) solid hsl(180, 75%, 50%);
+        border-left: var(--border-width) solid hsl(270, 75%, 50%);
+    }
+
     .blob-wrap {
         position: relative;
         width: 400px;
         height: 400px;
-    }
-
-    .blob-borders {
-        border-top: 15px solid hsl(0, 75%, 50%);
-        border-right: 15px solid hsl(90, 75%, 50%);
-        border-bottom: 15px solid hsl(180, 75%, 50%);
-        border-left: 15px solid hsl(270, 75%, 50%);
+        border: 1px dashed red;
     }
 
     .blob-show2 {
