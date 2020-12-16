@@ -3,7 +3,7 @@
         <!-- <div class="blob-show blob-borders-0" :style="{borderRadius: generatedCss}"></div> -->
 
         <div class="blob-wrap">
-            <div v-for="item of 4" :key="item" class="blob-show2" 
+            <div v-for="item of Number(options.shapes)" :key="item" class="blob-show2" 
                 :style="{
                     borderRadius: generatedCss,
                     transform: getItemTransform(item)
@@ -22,6 +22,10 @@
             <span>Shift</span>
             <label>X: <input type="range"></label>
             <label>Y: <input type="range"></label>
+        </div>
+
+        <div class="control-row">
+            <label>N shapes: <input type="range" min="1" max="20" step="1" v-model="options.shapes">{{options.shapes}}</label>
         </div>
 
         <div class="control-row">
@@ -58,6 +62,7 @@
             const generatedTxt = computed(() => generatedCss.value ? `border-radius: ${generatedCss.value}` : '');
 
             const options = reactive({
+                shapes: 3,
                 centerX: 0,
                 centerY: 0,
                 showBorder: true,
