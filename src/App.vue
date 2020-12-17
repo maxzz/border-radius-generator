@@ -38,7 +38,14 @@
         </div>
 
         <div class="control-row">
-            <label>Show border<input type="checkbox" v-model="options.showBorder"></label>
+            <label class="label-show-border">Show border<input type="checkbox" v-model="options.showBorder">
+                <div v-show="options.showBorder" class="legend">
+                    <span class="legend-tl">t-l</span>
+                    <span class="legend-tr">t-r</span>
+                    <span class="legend-br">b-r</span>
+                    <span class="legend-bl">b-l</span>
+                </div>
+            </label>
         </div>
 
     </main>
@@ -71,7 +78,7 @@
             const generatedTxt = computed(() => generatedCss.value ? `border-radius: ${generatedCss.value}` : '');
 
             const options = reactive({
-                shapes: 3,
+                shapes: 2,
                 borderWidth: 1,
                 scale: .1,
                 shiftX: 20,
@@ -158,11 +165,47 @@
         border-left: 5px solid hsl(120, 100%, 50%);
     }
 
+    $border-tl: hsl(0, 75%, 50%);
+    $border-tr: hsl(90, 75%, 50%);
+    $border-br: hsl(180, 75%, 50%);
+    $border-bl: hsl(270, 75%, 50%);
+
     .blob-borders {
-        border-top: var(--border-width) solid hsl(0, 75%, 50%);
-        border-right: var(--border-width) solid hsl(90, 75%, 50%);
-        border-bottom: var(--border-width) solid hsl(180, 75%, 50%);
-        border-left: var(--border-width) solid hsl(270, 75%, 50%);
+        border-top: var(--border-width) solid $border-tl;
+        border-right: var(--border-width) solid $border-tr;
+        border-bottom: var(--border-width) solid $border-br;
+        border-left: var(--border-width) solid $border-bl;
+    }
+
+    .legend {
+        //display: grid;
+        display: none;
+        margin-left: 2em;
+
+        column-gap: .2em;
+        grid-template-columns: repeat(4, 3em);
+        text-align: center;
+        font-size: .8em;
+        color: #e4e4e4;
+
+        .legend-tl {
+            background-color: $border-tl;
+        }
+        .legend-tr {
+            background-color: $border-tr;
+            color: #444444;
+        }
+        .legend-br {
+            background-color: $border-br;
+            color: #444444;
+        }
+        .legend-bl {
+            background-color: $border-bl;
+        }
+    }
+
+    .label-show-border:hover .legend {
+        display: grid;
     }
 
     .blob-wrap {
