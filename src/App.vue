@@ -32,13 +32,13 @@
                 </div>
 
                 <div class="control-row">
-                    <label>Scale: <input type="range" min=".001" max="2" step=".001" v-model="options.scale"><span class="value-disp">{{options.scale}}</span></label>
+                    <label>Step scale: <input type="range" min=".001" max="2" step=".001" v-model="options.scale"><span class="value-disp">{{options.scale}}</span></label>
                 </div>
         
-                <div class="control-row">
-                    <span>Shift:</span>
-                    <label>X: <input type="range" min="-50" max="50" step="1" v-model="options.shiftX"><span class="value-disp">{{options.shiftX}}</span></label>
-                    <label>Y: <input type="range" min="-50" max="50" step="1" v-model="options.shiftY"><span class="value-disp">{{options.shiftY}}</span></label>
+                <div class="control-row double-range">
+                    <span>Step shift:</span>
+                    <label>x: <input type="range" min="-50" max="50" step="1" v-model="options.shiftX"><span class="value-disp">{{options.shiftX}}</span></label>
+                    <label>y: <input type="range" min="-50" max="50" step="1" v-model="options.shiftY"><span class="value-disp">{{options.shiftY}}</span></label>
                 </div>
         
                 <div class="control-row">
@@ -149,29 +149,30 @@
 
     main {
         display: grid;
-        row-gap: 1em;
-        margin-top: 1em;
+        row-gap: 1rem;
+        margin-top: 1rem;
     }
 
     .control-panel {
         display: grid;
-        row-gap: .4em;
+        row-gap: .4rem;
+        font-size: .9rem;
     }
 
     input[type=button], input[type=text] {
-        padding: 1em;
+        padding: 1rem;
     }
 
     label {
         display: grid;
         grid-auto-flow: column;
         align-items: center;
-        column-gap: .4em;
+        column-gap: .4rem;
     }
 
     .value-disp {
-        width: 1em;
-        font-size: .7em;
+        width: 1rem;
+        font-size: .7rem;
     }
 
     .control-row {
@@ -179,6 +180,10 @@
         align-items: center;
         justify-content: space-between;
         user-select: none;
+    }
+
+    .double-range input {
+        width: 7rem;
     }
 
     .blob-show {
@@ -189,17 +194,17 @@
         transition: 1s border-radius;
     }
 
+    $border-tl: hsl(0, 75%, 50%);
+    $border-tr: hsl(90, 75%, 50%);
+    $border-br: hsl(180, 75%, 50%);
+    $border-bl: hsl(270, 75%, 50%);
+
     .blob-borders-0 {
         border-top: 5px solid hsl(120, 100%, 25%);
         border-right: 5px solid hsl(120, 100%, 50%);
         border-bottom: 5px solid hsl(120, 100%, 25%);
         border-left: 5px solid hsl(120, 100%, 50%);
     }
-
-    $border-tl: hsl(0, 75%, 50%);
-    $border-tr: hsl(90, 75%, 50%);
-    $border-br: hsl(180, 75%, 50%);
-    $border-bl: hsl(270, 75%, 50%);
 
     .blob-borders {
         border-top: var(--border-width) solid $border-tl;
@@ -211,12 +216,12 @@
     .toggle-showborder {
         .legend {
             display: none;
-            margin-left: 2em;
+            margin-left: 2rem;
 
-            column-gap: .2em;
+            column-gap: .2rem;
             grid-template-columns: repeat(4, 3em);
             text-align: center;
-            font-size: .8em;
+            font-size: .8rem;
             color: #e4e4e4;
 
             .legend-tl {
@@ -256,6 +261,6 @@
         bottom: 0;
 
         transition: 1s border-radius;
-        margin: 1em;
+        margin: 1rem;
     }
 </style>
