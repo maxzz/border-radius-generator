@@ -9,7 +9,7 @@
                 }"
                 :class="{'bubba-borders': options.showBorder}"
             >
-                <div class="bubba-marker" :style="{width: corners[0], height: corners[4], top: '0', left: '0'}"> </div>
+                <div class="bubba-marker" :style="{width: corners[0], height: corners[4], top: '0', left: '0'}" :title="`${corners[0]}, ${corners[4]}`"> </div>
                 <div class="bubba-marker" :style="{width: corners[1], height: corners[5], top: '0', right: '0'}"></div>
                 <div class="bubba-marker" :style="{width: corners[2], height: corners[6], bottom: '0', right: '0'}"></div>
                 <div class="bubba-marker" :style="{width: corners[3], height: corners[7], bottom: '0', left: '0'}"></div>
@@ -70,8 +70,9 @@
     function random(min, max){
         return Math.floor(min + Math.random() * (max - min));
     }
+
     function generateCorners(borderRadius) {
-        return [...(borderRadius || '').matchAll(/(\d\d?%)/g)];
+        return [...(borderRadius || '').matchAll(/(\d\d*%)/g)].map(m => m[1]);
     }
 
     function generateShape(symmetrical) {
