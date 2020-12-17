@@ -6,6 +6,7 @@
             <div v-for="item of Number(options.shapes)" :key="item" class="blob-show2" 
                 :style="{
                     borderRadius: generatedCss,
+                    backgroundColor: options.shapes == 1 ? 'red' : 'oldlace',
                     transform: getItemTransform(item)
                 }"
                 :class="{'blob-borders': options.showBorder}"
@@ -20,20 +21,20 @@
 
         <div class="control-row">
             <span>Shift:</span>
-            <label>X: <input type="range" min="-50" max="50" step="1" v-model="options.shiftX">{{options.shiftX}}</label>
-            <label>Y: <input type="range" min="-50" max="50" step="1" v-model="options.shiftY">{{options.shiftY}}</label>
+            <label>X: <input type="range" min="-50" max="50" step="1" v-model="options.shiftX"><span class="value-disp">{{options.shiftX}}</span></label>
+            <label>Y: <input type="range" min="-50" max="50" step="1" v-model="options.shiftY"><span class="value-disp">{{options.shiftY}}</span></label>
         </div>
 
         <div class="control-row">
-            <label>N shapes: <input type="range" min="1" max="20" step="1" v-model="options.shapes">{{options.shapes}}</label>
+            <label>N shapes: <input type="range" min="1" max="20" step="1" v-model="options.shapes"><span class="value-disp">{{options.shapes}}</span></label>
         </div>
 
         <div class="control-row">
-            <label>Scale: <input type="range" min=".001" max="2" step=".001" v-model="options.scale">{{options.scale}}</label>
+            <label>Scale: <input type="range" min=".001" max="2" step=".001" v-model="options.scale"><span class="value-disp">{{options.scale}}</span></label>
         </div>
 
         <div class="control-row">
-            <label>Boder: <input type="range" min="1" max="40" step="1" v-model="options.borderWidth">{{options.borderWidth}}</label>
+            <label>Boder: <input type="range" min="1" max="40" step="1" v-model="options.borderWidth"><span class="value-disp">{{options.borderWidth}}</span></label>
         </div>
 
         <div class="control-row">
@@ -117,7 +118,7 @@
 
     main {
         display: grid;
-        row-gap: 1em;
+        row-gap: .4em;
     }
 
     input[type=button], input[type=text] {
@@ -129,6 +130,11 @@
         grid-auto-flow: column;
         align-items: center;
         column-gap: .4em;
+    }
+
+    .value-disp {
+        width: 1em;
+        font-size: .7em;
     }
 
     .control-row {
@@ -173,7 +179,6 @@
         right: 0;
         bottom: 0;
 
-        background-color: oldlace;
         transition: 1s border-radius;
     }
 </style>
