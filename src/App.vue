@@ -20,9 +20,7 @@
         <input type="text" :value="generatedTxt" readonly>
 
         <div class="control-panel">
-            <button class="controls-header" @click="options.showControls = !options.showControls">
-                {{ options.showControls ? 'Hide controls' : 'Show controls' }}
-            </button>
+            <input type="button" class="controls-header" @click="options.showControls = !options.showControls" :value="options.showControls ? 'Hide controls' : 'Show controls'" />
 
             <template v-if="options.showControls">
                 <div class="control-row">
@@ -128,13 +126,16 @@
 
     body {
         height: 100vh;
+        width: calc(100vw - 32px); // - scrollbar
+        margin-left: 16px;
         display: grid;
-        place-items: center;
+        justify-content: center;
     }
 
     main {
         display: grid;
         row-gap: 1em;
+        margin-top: 1em;
     }
 
     .control-panel {
