@@ -81,6 +81,12 @@
 <script>
     import { computed, reactive, ref, toRaw } from 'vue';
 
+    function assignToReactive(to, from) {
+        for (const [k, v] of Object.entries(from)) {
+            to[k] = v;
+        }
+    }
+
     function random(min, max){
         return Math.floor(min + Math.random() * (max - min));
     }
@@ -132,7 +138,7 @@
             };
 
             const demoOptions = {
-                showControls: false,
+                showControls: true,
                 shapes: 10,
                 borderWidth: 1,
                 scale: .1, // scale: .0043,
@@ -184,23 +190,26 @@
 
             function onDemoMode(event) {
                 if (options.demoMode) {
-                    console.log('on', toRaw(options));
+                    console.log('on1', toRaw(options));
 
                     currentOptions = toRaw(options);
+                    console.log('on2', currentOptions);
+                    
+                    assignToReactive(options, demoOptions);
+                    // for (const [k, v] of Object.entries(demoOptions)) {
+                    //     options[k] = v;
+                    // }
 
-                    for (const [k, v] of Object.entries(demoOptions)) {
-                        options[k] = v;
-                    }
-
-                    //options = reactive(demoOptions);
-
-                    console.log('on2', toRaw(options));
+                    console.log('on3', currentOptions);
+                    console.log('on4', options);
                 } else {
                     //options = reactive(currentOptions);
+                    console.log('off', toRaw(currentOptions));
 
-                    for (const [k, v] of Object.entries(currentOptions)) {
-                        options[k] = v;
-                    }
+                    assignToReactive(options, currentOptions);
+                    // for (const [k, v] of Object.entries(currentOptions)) {
+                    //     options[k] = v;
+                    // }
                 }
             }
 
