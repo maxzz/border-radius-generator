@@ -68,16 +68,18 @@
 
                 <div class="control-row">
                     <label>Animate<input type="checkbox" v-model="options.animate" @change="onAnimate"></label> <!-- TODO: store the last 12 steps of animation in history -->
-                    <label>Demo options<input type="checkbox" v-model="options.showRects"></label>
+                    <label>Demo options<input type="checkbox" v-model="options.demoMode" @change="onDemoMode"></label>
                 </div>
             </template>
         </div>
+
+        <pre>{{options}}</pre>
 
     </main>
 </template>
 
 <script>
-    import { computed, reactive, ref } from 'vue';
+    import { computed, reactive, ref, toRaw } from 'vue';
 
     function random(min, max){
         return Math.floor(min + Math.random() * (max - min));
@@ -112,10 +114,10 @@
 
     export default {
         setup() {
-            const generatedCss = ref('23% 77% 82% 18% / 59% 21% 79% 41%'); // ref(generateShape(true));
+            const generatedCss = ref('23% 77% 82% 18% / 59% 21% 79% 41%'); // ref(generateShape(true)); // TODO: allow edit: '10% 90% 28% 72% / 20% 58% 42% 80%'
             const generatedTxt = computed(() => generatedCss.value ? `border-radius: ${generatedCss.value}` : '');
 
-            let currentOptions = {
+            const defaultOptions = {
                 showControls: true,
                 shapes: 2,
                 borderWidth: 1,
@@ -126,7 +128,7 @@
                 showRects: true,
                 showBorder: true,
                 animate: false,
-                demoOptions: false,
+                demoMode: false,
             };
 
             const demoOptions = {
@@ -140,12 +142,12 @@
                 showRects: true,
                 showBorder: true,
                 animate: false,
-                demoOptions: true,
+                demoMode: true,
             };
 
-            let options = reactive(currentOptions);
+            let options = reactive(defaultOptions);
 
-            options.demoOptions && (options = reactive(demoOptions));
+            options.demoMode && (options = reactive(demoOptions));
 
             function getItemCss(num) {
                 return ``;
@@ -177,8 +179,20 @@
                     }
                 }
             }
-            function onDemoOptions(event) {
-                console.log('e', event.target.checked, options.animate);
+
+            let currentOptions = defaultOptions;
+
+            function onDemoMode(event) {
+                if (options.demoMode) {
+                    console.log('on', toRaw(options));
+                    
+                    currentOptions = toRaw(options);
+                    options = reactive(demoOptions);
+
+                    console.log('on2', toRaw(options));
+                } else {
+                    options = reactive(currentOptions);
+                }
             }
 
             return {
@@ -188,7 +202,7 @@
                 getItemTransform,
                 onGenerate,
                 onAnimate,
-                onDemoOptions,
+                onDemoMode,
                 corners,
             };
         }
