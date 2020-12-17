@@ -15,18 +15,26 @@
             </div>
         </div>
 
-        <input type="button" value="Generate" @click="onGenerate">
-
         <input type="text" :value="generatedTxt" readonly>
+
+        <input type="button" value="Generate" @click="onGenerate">
 
         <div class="control-panel">
             <input type="button" class="controls-header" @click="options.showControls = !options.showControls" :value="options.showControls ? 'Hide controls' : 'Show controls'" />
 
             <template v-if="options.showControls">
                 <div class="control-row">
-                    <label>Generate symmetrical<input type="checkbox" v-model="options.symmetrical"></label>
+                    <label>Number of shapes: <input type="range" min="1" max="20" step="1" v-model="options.shapes"><span class="value-disp">{{options.shapes}}</span></label>
+                </div>
+        
+                <div class="control-row">
+                    <label>Boder: <input type="range" min="1" max="100" step="1" v-model="options.borderWidth"><span class="value-disp">{{options.borderWidth}}</span></label>
                 </div>
 
+                <div class="control-row">
+                    <label>Scale: <input type="range" min=".001" max="2" step=".001" v-model="options.scale"><span class="value-disp">{{options.scale}}</span></label>
+                </div>
+        
                 <div class="control-row">
                     <span>Shift:</span>
                     <label>X: <input type="range" min="-50" max="50" step="1" v-model="options.shiftX"><span class="value-disp">{{options.shiftX}}</span></label>
@@ -34,17 +42,9 @@
                 </div>
         
                 <div class="control-row">
-                    <label>N shapes: <input type="range" min="1" max="20" step="1" v-model="options.shapes"><span class="value-disp">{{options.shapes}}</span></label>
+                    <label>Generate symmetrical corners<input type="checkbox" v-model="options.symmetrical"></label>
                 </div>
-        
-                <div class="control-row">
-                    <label>Scale: <input type="range" min=".001" max="2" step=".001" v-model="options.scale"><span class="value-disp">{{options.scale}}</span></label>
-                </div>
-        
-                <div class="control-row">
-                    <label>Boder: <input type="range" min="1" max="100" step="1" v-model="options.borderWidth"><span class="value-disp">{{options.borderWidth}}</span></label>
-                </div>
-        
+
                 <div class="control-row">
                     <label class="toggle-showborder">Show border<input type="checkbox" v-model="options.showBorder">
                         <div v-show="options.showBorder" class="legend">
@@ -178,6 +178,7 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
+        user-select: none;
     }
 
     .blob-show {
@@ -244,6 +245,7 @@
         width: 400px;
         height: 400px;
         border: 1px dashed red;
+        background-color: #fff;
     }
 
     .blob-show2 {
@@ -254,5 +256,6 @@
         bottom: 0;
 
         transition: 1s border-radius;
+        margin: 1em;
     }
 </style>
