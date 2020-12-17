@@ -11,10 +11,10 @@
                 :class="{'bubba-borders': options.showBorder}"
             >
                 <template v-if="options.showRects">
-                    <div class="bubba-marker" :style="{width: corners[0], height: corners[4], top: '0', left: '0'}" :title="`${corners[0]}, ${corners[4]}`"> </div>
-                    <div class="bubba-marker" :style="{width: corners[1], height: corners[5], top: '0', right: '0'}"></div>
-                    <div class="bubba-marker" :style="{width: corners[2], height: corners[6], bottom: '0', right: '0'}"></div>
-                    <div class="bubba-marker" :style="{width: corners[3], height: corners[7], bottom: '0', left: '0'}"></div>
+                    <div class="bubba-marker" :style="{width: corners[0], height: corners[4]}" :title="`top-left\n${corners[0]}, ${corners[4]}`"> </div>
+                    <div class="bubba-marker" :style="{width: corners[1], height: corners[5]}" :title="`top-right\n${corners[1]}, ${corners[5]}`"></div>
+                    <div class="bubba-marker" :style="{width: corners[2], height: corners[6]}" :title="`bottom-right\n${corners[2]}, ${corners[6]}`"></div>
+                    <div class="bubba-marker" :style="{width: corners[3], height: corners[7]}" :title="`bottom-left\n${corners[3]}, ${corners[7]}`"></div>
                 </template>
 
                 <span v-if="options.showBorder">{{item}}</span>
@@ -52,18 +52,23 @@
                 </div>
 
                 <div class="control-row">
-                    <label>Show corner rectangle<input type="checkbox" v-model="options.showRects"></label>
+                    <label>Show corner rectangles<input type="checkbox" v-model="options.showRects"></label>
                 </div>
 
                 <div class="control-row">
                     <label class="toggle-showborder">Show border<input type="checkbox" v-model="options.showBorder">
                         <div v-show="options.showBorder" class="legend">
-                            <span class="legend-tl" title="top-left">t-l</span>
-                            <span class="legend-tr" title="top-right">t-r</span>
-                            <span class="legend-br" title="bottom-right">b-r</span>
-                            <span class="legend-bl" title="bottom-left">b-l</span>
+                            <span class="legend-tl" title="top-left">T-L</span>
+                            <span class="legend-tr" title="top-right">T-R</span>
+                            <span class="legend-br" title="bottom-right">B-R</span>
+                            <span class="legend-bl" title="bottom-left">B-L</span>
                         </div>
                     </label>
+                </div>
+
+                <div class="control-row">
+                    <label>Animate<input type="checkbox" v-model="options.showRects"></label> <!-- TODO: store the last 12 steps of animation in history -->
+                    <label>Demo options<input type="checkbox" v-model="options.showRects"></label>
                 </div>
             </template>
         </div>
@@ -120,11 +125,12 @@
                 symmetrical: true,
                 showRects: true,
                 showBorder: true,
+                animate: false,
+                demoOptions: true,
             });
 
-            /** /
             const demoOptions = {
-                //showControls: false,
+                showControls: false,
                 shapes: 10,
                 borderWidth: 1,
                 scale: .1, // scale: .0043,
@@ -133,17 +139,11 @@
                 symmetrical: true,
                 showRects: true,
                 showBorder: true,
+                animate: false,
+                //demoOptions: true,
             };
             
-            //options.shapes = 10;
-            //options.scale = .0043;
-
-            for (const [key, val] of Object.entries(demoOptions)) {
-                console.log(key, val);
-                options[key] = val;
-            }
-            //options = {...demoOptions};
-            /**/
+            options = reactive({...demoOptions}); //for (const [key, val] of Object.entries(demoOptions)) { options[key] = val; }
 
             function getItemCss(num) {
                 return ``;
@@ -173,7 +173,7 @@
 </script>
 
 <style lang="scss">
-    $border-tl: hsl(0, 75%, 50%);
+    $border-tl: hsl(30, 75%, 50%);
     $border-tr: hsl(90, 75%, 50%);
     $border-br: hsl(180, 75%, 50%);
     $border-bl: hsl(270, 75%, 50%);
@@ -226,18 +226,26 @@
     $marker-opacity: .6;
 
     .bubba-marker:nth-child(1) {
+        top: 0;
+        left: 0;
         background-color: transparentize($border-tl, $marker-opacity);
     }
 
     .bubba-marker:nth-child(2) {
+        top: 0;
+        right: 0;
         background-color: transparentize($border-tr, $marker-opacity);
     }
 
     .bubba-marker:nth-child(3) {
+        bottom: 0;
+        right: 0;
         background-color: transparentize($border-br, $marker-opacity);
     }
 
     .bubba-marker:nth-child(4) {
+        bottom: 0;
+        left: 0;
         background-color: transparentize($border-bl, $marker-opacity);
     }
 
@@ -291,6 +299,7 @@
     .toggle-showborder {
         .legend {
             display: none;
+            display: grid;
             margin-left: 2rem;
 
             column-gap: .2rem;
@@ -301,6 +310,7 @@
 
             .legend-tl {
                 background-color: $border-tl;
+                color: #f1f1ff;
             }
             .legend-tr {
                 background-color: $border-tr;
