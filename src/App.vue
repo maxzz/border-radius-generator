@@ -141,7 +141,7 @@
                 symmetrical: true,
                 showRects: true,
                 showBorder: true,
-                animate: false,
+                animate: true,
                 demoMode: true,
             };
 
@@ -185,13 +185,22 @@
             function onDemoMode(event) {
                 if (options.demoMode) {
                     console.log('on', toRaw(options));
-                    
+
                     currentOptions = toRaw(options);
-                    options = reactive(demoOptions);
+
+                    for (const [k, v] of Object.entries(demoOptions)) {
+                        options[k] = v;
+                    }
+
+                    //options = reactive(demoOptions);
 
                     console.log('on2', toRaw(options));
                 } else {
-                    options = reactive(currentOptions);
+                    //options = reactive(currentOptions);
+
+                    for (const [k, v] of Object.entries(currentOptions)) {
+                        options[k] = v;
+                    }
                 }
             }
 
