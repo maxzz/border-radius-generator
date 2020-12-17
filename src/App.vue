@@ -66,28 +66,9 @@
     function random(min, max){
         return Math.floor(min + Math.random() * (max - min));
     }
-    function generateCorners(symmetrical) {
-        let wTL = random(5, 96);
-        let wBL = random(5, 96);
-        let hTL = random(5, 96);
-        let hTR = random(5, 96);
-
-        let wTR, wBR, hBL, hBR;
-
-        if (symmetrical) {
-            wTR = 100 - wTL;
-            wBR = 100 - wBL;
-            hBL = 100 - hTL;
-            hBR = 100 - hTR;
-        } else {
-            wTR = random(5, 96);
-            wBR = random(5, 96);
-            hBL = random(5, 96);
-            hBR = random(5, 96);
-        }
-
-        return { w: [wTL, wTR, wBR, wBL], h: [hTL, hTR, hBR, hBL] };
-    }
+    // function generateCorners(borderRadius) {
+    //     return { w: [wTL, wTR, wBR, wBL], h: [hTL, hTR, hBR, hBL] };
+    // }
 
     function generateShape(symmetrical) {
         let wTL = random(5, 96);
@@ -109,7 +90,14 @@
             hBR = random(5, 96);
         }
 
-        return `${wTL}% ${wTR}% ${wBR}% ${wBL}% / ${hTL}% ${hTR}% ${hBR}% ${hBL}%`;
+        let s = `${wTL}% ${wTR}% ${wBR}% ${wBL}% / ${hTL}% ${hTR}% ${hBR}% ${hBL}%`;
+
+        let m = s.matchAll(/(\d\d?%)/g);
+        console.log({m: [...m]});
+
+        return s;
+
+        // return `${wTL}% ${wTR}% ${wBR}% ${wBL}% / ${hTL}% ${hTR}% ${hBR}% ${hBL}%`;
     }
 
     export default {
