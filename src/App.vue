@@ -1,9 +1,7 @@
 <template>
     <main>
-        <!-- <div class="blob-show blob-borders-0" :style="{borderRadius: generatedCss}"></div> -->
-
-        <div class="blob-wrap" :style="{'--border-width': `${options.borderWidth}px`}">
-            <div v-for="item of Number(options.shapes)" :key="item" class="blob-show2" 
+        <div class="bubbas" :style="{'--border-width': `${options.borderWidth}px`}">
+            <div v-for="item of Number(options.shapes)" :key="item" class="bubba" 
                 :style="{
                     borderRadius: generatedCss,
                     backgroundColor: options.shapes == 1 ? 'red' : 'oldlace',
@@ -153,45 +151,56 @@
         margin-top: 1rem;
     }
 
-    .control-panel {
-        display: grid;
-        row-gap: .4rem;
-        font-size: .9rem;
+    .bubbas {
+        position: relative;
+        width: 400px;
+        height: 400px;
+        border: 1px dashed red;
+        background-color: #fff;
+    }
+
+    .bubba {
+        position: absolute;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+
+        transition: 1s border-radius;
+        margin: 1rem;
     }
 
     input[type=button], input[type=text] {
         padding: 1rem;
     }
 
-    label {
+    .control-panel {
         display: grid;
-        grid-auto-flow: column;
-        align-items: center;
-        column-gap: .4rem;
-    }
+        row-gap: .4rem;
+        font-size: .9rem;
 
-    .value-disp {
-        width: 1rem;
-        font-size: .7rem;
-    }
+        label {
+            display: grid;
+            grid-auto-flow: column;
+            align-items: center;
+            column-gap: .4rem;
+        }
 
-    .control-row {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        user-select: none;
-    }
+        .value-disp {
+            width: 1rem;
+            font-size: .7rem;
+        }
 
-    .double-range input {
-        width: 7rem;
-    }
+        .control-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            user-select: none;
+        }
 
-    .blob-show {
-        position: relative;
-        width: 400px;
-        height: 400px;
-        background-color: red;
-        transition: 1s border-radius;
+        .double-range input {
+            width: 7rem;
+        }
     }
 
     $border-tl: hsl(0, 75%, 50%);
@@ -199,18 +208,18 @@
     $border-br: hsl(180, 75%, 50%);
     $border-bl: hsl(270, 75%, 50%);
 
-    .blob-borders-0 {
-        border-top: 5px solid hsl(120, 100%, 25%);
-        border-right: 5px solid hsl(120, 100%, 50%);
-        border-bottom: 5px solid hsl(120, 100%, 25%);
-        border-left: 5px solid hsl(120, 100%, 50%);
-    }
-
     .blob-borders {
         border-top: var(--border-width) solid $border-tl;
         border-right: var(--border-width) solid $border-tr;
         border-bottom: var(--border-width) solid $border-br;
         border-left: var(--border-width) solid $border-bl;
+    }
+
+    .blob-borders-2 {
+        border-top: 5px solid hsl(120, 100%, 25%);
+        border-right: 5px solid hsl(120, 100%, 50%);
+        border-bottom: 5px solid hsl(120, 100%, 25%);
+        border-left: 5px solid hsl(120, 100%, 50%);
     }
 
     .toggle-showborder {
@@ -243,24 +252,5 @@
         &:hover .legend {
             display: grid;
         }
-    }
-
-    .blob-wrap {
-        position: relative;
-        width: 400px;
-        height: 400px;
-        border: 1px dashed red;
-        background-color: #fff;
-    }
-
-    .blob-show2 {
-        position: absolute;
-        left: 0;
-        top: 0;
-        right: 0;
-        bottom: 0;
-
-        transition: 1s border-radius;
-        margin: 1rem;
     }
 </style>
