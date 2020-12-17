@@ -19,33 +19,41 @@
 
         <input type="text" :value="generatedTxt" readonly>
 
-        <div class="control-row">
-            <span>Shift:</span>
-            <label>X: <input type="range" min="-50" max="50" step="1" v-model="options.shiftX"><span class="value-disp">{{options.shiftX}}</span></label>
-            <label>Y: <input type="range" min="-50" max="50" step="1" v-model="options.shiftY"><span class="value-disp">{{options.shiftY}}</span></label>
-        </div>
+        <div class="control-panel">
+            <button class="controls-header" @click="options.showControls = !options.showControls">
+                {{ options.showControls ? 'Hide controls' : 'Show controls' }}
+            </button>
 
-        <div class="control-row">
-            <label>N shapes: <input type="range" min="1" max="20" step="1" v-model="options.shapes"><span class="value-disp">{{options.shapes}}</span></label>
-        </div>
-
-        <div class="control-row">
-            <label>Scale: <input type="range" min=".001" max="2" step=".001" v-model="options.scale"><span class="value-disp">{{options.scale}}</span></label>
-        </div>
-
-        <div class="control-row">
-            <label>Boder: <input type="range" min="1" max="40" step="1" v-model="options.borderWidth"><span class="value-disp">{{options.borderWidth}}</span></label>
-        </div>
-
-        <div class="control-row">
-            <label class="label-show-border">Show border<input type="checkbox" v-model="options.showBorder">
-                <div v-show="options.showBorder" class="legend">
-                    <span class="legend-tl">t-l</span>
-                    <span class="legend-tr">t-r</span>
-                    <span class="legend-br">b-r</span>
-                    <span class="legend-bl">b-l</span>
+            <template v-if="options.showControls">
+                <div class="control-row">
+                    <span>Shift:</span>
+                    <label>X: <input type="range" min="-50" max="50" step="1" v-model="options.shiftX"><span class="value-disp">{{options.shiftX}}</span></label>
+                    <label>Y: <input type="range" min="-50" max="50" step="1" v-model="options.shiftY"><span class="value-disp">{{options.shiftY}}</span></label>
                 </div>
-            </label>
+        
+                <div class="control-row">
+                    <label>N shapes: <input type="range" min="1" max="20" step="1" v-model="options.shapes"><span class="value-disp">{{options.shapes}}</span></label>
+                </div>
+        
+                <div class="control-row">
+                    <label>Scale: <input type="range" min=".001" max="2" step=".001" v-model="options.scale"><span class="value-disp">{{options.scale}}</span></label>
+                </div>
+        
+                <div class="control-row">
+                    <label>Boder: <input type="range" min="1" max="100" step="1" v-model="options.borderWidth"><span class="value-disp">{{options.borderWidth}}</span></label>
+                </div>
+        
+                <div class="control-row">
+                    <label class="label-show-border">Show border<input type="checkbox" v-model="options.showBorder">
+                        <div v-show="options.showBorder" class="legend">
+                            <span class="legend-tl">t-l</span>
+                            <span class="legend-tr">t-r</span>
+                            <span class="legend-br">b-r</span>
+                            <span class="legend-bl">b-l</span>
+                        </div>
+                    </label>
+                </div>
+            </template>
         </div>
 
     </main>
@@ -84,6 +92,7 @@
                 shiftX: 20,
                 shiftY: 20,
                 showBorder: true,
+                showControls: true,
             });
 
             function getItemCss(num) {
@@ -124,6 +133,11 @@
     }
 
     main {
+        display: grid;
+        row-gap: 1em;
+    }
+
+    .control-panel {
         display: grid;
         row-gap: .4em;
     }
