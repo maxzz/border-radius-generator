@@ -11,7 +11,7 @@
                 }"
                 :class="{'blob-borders': options.showBorder}"
             >
-            <span v-if="options.showBorder">{{item}}</span>
+                <span v-if="options.showBorder">{{item}}</span>
             </div>
         </div>
 
@@ -42,12 +42,12 @@
                 </div>
         
                 <div class="control-row">
-                    <label class="label-show-border">Show border<input type="checkbox" v-model="options.showBorder">
+                    <label class="toggle-showborder">Show border<input type="checkbox" v-model="options.showBorder">
                         <div v-show="options.showBorder" class="legend">
-                            <span class="legend-tl">t-l</span>
-                            <span class="legend-tr">t-r</span>
-                            <span class="legend-br">b-r</span>
-                            <span class="legend-bl">b-l</span>
+                            <span class="legend-tl" title="top-left">t-l</span>
+                            <span class="legend-tr" title="top-right">t-r</span>
+                            <span class="legend-br" title="bottom-right">b-r</span>
+                            <span class="legend-bl" title="bottom-left">b-l</span>
                         </div>
                     </label>
                 </div>
@@ -130,6 +130,7 @@
         margin-left: 16px;
         display: grid;
         justify-content: center;
+        background-color: #f9f9f9;
     }
 
     main {
@@ -192,35 +193,36 @@
         border-left: var(--border-width) solid $border-bl;
     }
 
-    .legend {
-        //display: grid;
-        display: none;
-        margin-left: 2em;
+    .toggle-showborder {
+        .legend {
+            display: none;
+            margin-left: 2em;
 
-        column-gap: .2em;
-        grid-template-columns: repeat(4, 3em);
-        text-align: center;
-        font-size: .8em;
-        color: #e4e4e4;
+            column-gap: .2em;
+            grid-template-columns: repeat(4, 3em);
+            text-align: center;
+            font-size: .8em;
+            color: #e4e4e4;
 
-        .legend-tl {
-            background-color: $border-tl;
+            .legend-tl {
+                background-color: $border-tl;
+            }
+            .legend-tr {
+                background-color: $border-tr;
+                color: #444444;
+            }
+            .legend-br {
+                background-color: $border-br;
+                color: #444444;
+            }
+            .legend-bl {
+                background-color: $border-bl;
+            }
         }
-        .legend-tr {
-            background-color: $border-tr;
-            color: #444444;
-        }
-        .legend-br {
-            background-color: $border-br;
-            color: #444444;
-        }
-        .legend-bl {
-            background-color: $border-bl;
-        }
-    }
 
-    .label-show-border:hover .legend {
-        display: grid;
+        &:hover .legend {
+            display: grid;
+        }
     }
 
     .blob-wrap {
