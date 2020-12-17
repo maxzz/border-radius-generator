@@ -38,7 +38,7 @@
                 </div>
 
                 <div class="control-row">
-                    <label>Step scale: <input type="range" min=".001" max="2" step=".001" v-model="options.scale"><span class="value-disp">{{options.scale}}</span></label>
+                    <label>Step scale: <input type="range" min=".0001" max="2" step=".0001" v-model="options.scale"><span class="value-disp">{{options.scale}}</span></label>
                 </div>
         
                 <div class="control-row double-range">
@@ -110,17 +110,40 @@
             const generatedCss = ref('23% 77% 82% 18% / 59% 21% 79% 41%'); // ref(generateShape(true));
             const generatedTxt = computed(() => generatedCss.value ? `border-radius: ${generatedCss.value}` : '');
 
-            const options = reactive({
+            let options = reactive({
+                showControls: true,
                 shapes: 2,
                 borderWidth: 1,
                 scale: .1,
                 shiftX: 20,
                 shiftY: 20,
-                showBorder: true,
-                showControls: true,
-                showRects: true,
                 symmetrical: true,
+                showRects: true,
+                showBorder: true,
             });
+
+            /** /
+            const demoOptions = {
+                //showControls: false,
+                shapes: 10,
+                borderWidth: 1,
+                scale: .1, // scale: .0043,
+                shiftX: 9,
+                shiftY: 7,
+                symmetrical: true,
+                showRects: true,
+                showBorder: true,
+            };
+            
+            //options.shapes = 10;
+            //options.scale = .0043;
+
+            for (const [key, val] of Object.entries(demoOptions)) {
+                console.log(key, val);
+                options[key] = val;
+            }
+            //options = {...demoOptions};
+            /**/
 
             function getItemCss(num) {
                 return ``;
