@@ -9,7 +9,11 @@
                 }"
                 :class="{'bubba-borders': options.showBorder}"
             >
-                <div class="bubba-marker"></div>
+                <div class="bubba-marker" :style="{width: corners[0], height: corners[4], top: '0', left: '0'}"> </div>
+                <div class="bubba-marker" :style="{width: corners[1], height: corners[5], top: '0', right: '0'}"></div>
+                <div class="bubba-marker" :style="{width: corners[2], height: corners[6], bottom: '0', right: '0'}"></div>
+                <div class="bubba-marker" :style="{width: corners[3], height: corners[7], bottom: '0', left: '0'}"></div>
+
                 <span v-if="options.showBorder">{{item}}</span>
             </div>
         </div>
@@ -66,9 +70,9 @@
     function random(min, max){
         return Math.floor(min + Math.random() * (max - min));
     }
-    // function generateCorners(borderRadius) {
-    //     return { w: [wTL, wTR, wBR, wBL], h: [hTL, hTR, hBR, hBL] };
-    // }
+    function generateCorners(borderRadius) {
+        return [...(borderRadius || '').matchAll(/(\d\d?%)/g)];
+    }
 
     function generateShape(symmetrical) {
         let wTL = random(5, 96);
@@ -90,14 +94,7 @@
             hBR = random(5, 96);
         }
 
-        let s = `${wTL}% ${wTR}% ${wBR}% ${wBL}% / ${hTL}% ${hTR}% ${hBR}% ${hBL}%`;
-
-        let m = s.matchAll(/(\d\d?%)/g);
-        console.log({m: [...m]});
-
-        return s;
-
-        // return `${wTL}% ${wTR}% ${wBR}% ${wBL}% / ${hTL}% ${hTR}% ${hBR}% ${hBL}%`;
+        return `${wTL}% ${wTR}% ${wBR}% ${wBL}% / ${hTL}% ${hTR}% ${hBR}% ${hBL}%`;
     }
 
     export default {
@@ -129,18 +126,26 @@
                 generatedCss.value = generateShape(options.symmetrical);
             }
 
+            let corners = computed(() => generateCorners(generatedCss.value));
+
             return {
                 options,
                 generatedCss,
                 generatedTxt,
                 getItemTransform,
                 onGenerate,
+                corners,
             };
         }
     };
 </script>
 
 <style lang="scss">
+    $border-tl: hsl(0, 75%, 50%);
+    $border-tr: hsl(90, 75%, 50%);
+    $border-br: hsl(180, 75%, 50%);
+    $border-bl: hsl(270, 75%, 50%);
+
     *, *::before, *::after {
         margin: 0;
         padding: 0;
@@ -162,16 +167,6 @@
         margin-top: 1rem;
     }
 
-    .bubba-marker {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 20px;
-        height: 20px;
-        background-color: rgba(238, 130, 238, 0.226);
-        border: 1px dashed darkblue;
-    }
-
     .bubbas {
         position: relative;
         width: 400px;
@@ -191,6 +186,30 @@
         margin: 1rem;
 
         outline: 1px dashed green;
+    }
+
+    .bubba-marker {
+        position: absolute;
+        //background-color: rgba(238, 130, 238, 0.226);
+        outline: 1px dashed darkblue;
+    }
+
+    $marker-opacity: .9;
+
+    .bubba-marker:nth-child(1) {
+        background-color: transparentize($border-tl, $marker-opacity);
+    }
+
+    .bubba-marker:nth-child(2) {
+        background-color: transparentize($border-tr, $marker-opacity);
+    }
+
+    .bubba-marker:nth-child(3) {
+        background-color: transparentize($border-br, $marker-opacity);
+    }
+
+    .bubba-marker:nth-child(4) {
+        background-color: transparentize($border-bl, $marker-opacity);
     }
 
     input[type=button], input[type=text] {
@@ -225,11 +244,6 @@
             width: 7rem;
         }
     }
-
-    $border-tl: hsl(0, 75%, 50%);
-    $border-tr: hsl(90, 75%, 50%);
-    $border-br: hsl(180, 75%, 50%);
-    $border-bl: hsl(270, 75%, 50%);
 
     .bubba-borders {
         border-top: var(--border-width) solid $border-tl;
