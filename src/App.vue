@@ -24,6 +24,10 @@
 
             <template v-if="options.showControls">
                 <div class="control-row">
+                    <label>Generate symmetrical<input type="checkbox" v-model="options.symmetrical"></label>
+                </div>
+
+                <div class="control-row">
                     <span>Shift:</span>
                     <label>X: <input type="range" min="-50" max="50" step="1" v-model="options.shiftX"><span class="value-disp">{{options.shiftX}}</span></label>
                     <label>Y: <input type="range" min="-50" max="50" step="1" v-model="options.shiftY"><span class="value-disp">{{options.shiftY}}</span></label>
@@ -64,23 +68,32 @@
         return Math.floor(min + Math.random() * (max - min));
     }
 
-    function generateShape() {
-        var r1 = random(5, 96);
-        var r2 = random(5, 96);
-        var r3 = random(5, 96);
-        var r4 = random(5, 96);
+    function generateShape(symmetrical) {
+        let r1 = random(5, 96);
+        let r2 = random(5, 96);
+        let r3 = random(5, 96);
+        let r4 = random(5, 96);
 
-        var r11 = 100 - r1;
-        var r22 = 100 - r2;
-        var r33 = 100 - r3;
-        var r44 = 100 - r4;
+        let r11, r22, r33, r44;
+
+        if (symmetrical) {
+            r11 = 100 - r1;
+            r22 = 100 - r2;
+            r33 = 100 - r3;
+            r44 = 100 - r4;
+        } else {
+            r11 = random(5, 96);
+            r22 = random(5, 96);
+            r33 = random(5, 96);
+            r44 = random(5, 96);
+        }
 
         return `${r1}% ${r11}% ${r22}% ${r2}% / ${r3}% ${r4}% ${r44}% ${r33}%`;
     }
 
     export default {
         setup() {
-            const generatedCss = ref('23% 77% 82% 18% / 59% 21% 79% 41%'); // ref(generateShape());
+            const generatedCss = ref('23% 77% 82% 18% / 59% 21% 79% 41%'); // ref(generateShape(true));
             const generatedTxt = computed(() => generatedCss.value ? `border-radius: ${generatedCss.value}` : '');
 
             const options = reactive({
@@ -91,6 +104,7 @@
                 shiftY: 20,
                 showBorder: true,
                 showControls: true,
+                symmetrical: true,
             });
 
             function getItemCss(num) {
@@ -103,7 +117,7 @@
             }
 
             function onGenerate() {
-                generatedCss.value = generateShape();
+                generatedCss.value = generateShape(options.symmetrical);
             }
 
             return {
