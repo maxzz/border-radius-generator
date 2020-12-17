@@ -5,14 +5,17 @@
                 :style="{
                     borderRadius: generatedCss,
                     backgroundColor: options.shapes == 1 ? 'red' : 'oldlace',
+                    outline: options.showRects ? '1px dashed green' : 'none',
                     transform: getItemTransform(item)
                 }"
                 :class="{'bubba-borders': options.showBorder}"
             >
-                <div class="bubba-marker" :style="{width: corners[0], height: corners[4], top: '0', left: '0'}" :title="`${corners[0]}, ${corners[4]}`"> </div>
-                <div class="bubba-marker" :style="{width: corners[1], height: corners[5], top: '0', right: '0'}"></div>
-                <div class="bubba-marker" :style="{width: corners[2], height: corners[6], bottom: '0', right: '0'}"></div>
-                <div class="bubba-marker" :style="{width: corners[3], height: corners[7], bottom: '0', left: '0'}"></div>
+                <template v-if="options.showRects">
+                    <div class="bubba-marker" :style="{width: corners[0], height: corners[4], top: '0', left: '0'}" :title="`${corners[0]}, ${corners[4]}`"> </div>
+                    <div class="bubba-marker" :style="{width: corners[1], height: corners[5], top: '0', right: '0'}"></div>
+                    <div class="bubba-marker" :style="{width: corners[2], height: corners[6], bottom: '0', right: '0'}"></div>
+                    <div class="bubba-marker" :style="{width: corners[3], height: corners[7], bottom: '0', left: '0'}"></div>
+                </template>
 
                 <span v-if="options.showBorder">{{item}}</span>
             </div>
@@ -46,6 +49,10 @@
         
                 <div class="control-row">
                     <label>Generate symmetrical corners<input type="checkbox" v-model="options.symmetrical"></label>
+                </div>
+
+                <div class="control-row">
+                    <label>Show corner rectangle<input type="checkbox" v-model="options.showRects"></label>
                 </div>
 
                 <div class="control-row">
@@ -111,6 +118,7 @@
                 shiftY: 20,
                 showBorder: true,
                 showControls: true,
+                showRects: true,
                 symmetrical: true,
             });
 
@@ -185,17 +193,14 @@
 
         transition: 1s border-radius;
         margin: 1rem;
-
-        outline: 1px dashed green;
     }
 
     .bubba-marker {
         position: absolute;
-        //background-color: rgba(238, 130, 238, 0.226);
-        outline: 1px dashed darkblue;
+        outline: 1px dashed yellowgreen;
     }
 
-    $marker-opacity: .9;
+    $marker-opacity: .6;
 
     .bubba-marker:nth-child(1) {
         background-color: transparentize($border-tl, $marker-opacity);
