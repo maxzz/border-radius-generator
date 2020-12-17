@@ -7,8 +7,9 @@
                     backgroundColor: options.shapes == 1 ? 'red' : 'oldlace',
                     transform: getItemTransform(item)
                 }"
-                :class="{'blob-borders': options.showBorder}"
+                :class="{'bubba-borders': options.showBorder}"
             >
+                <div class="bubba-marker"></div>
                 <span v-if="options.showBorder">{{item}}</span>
             </div>
         </div>
@@ -67,26 +68,26 @@
     }
 
     function generateShape(symmetrical) {
-        let r1 = random(5, 96);
-        let r2 = random(5, 96);
-        let r3 = random(5, 96);
-        let r4 = random(5, 96);
+        let wTL = random(5, 96);
+        let wBL = random(5, 96);
+        let hTL = random(5, 96);
+        let hTR = random(5, 96);
 
-        let r11, r22, r33, r44;
+        let wTR, wBR, hBL, hBR;
 
         if (symmetrical) {
-            r11 = 100 - r1;
-            r22 = 100 - r2;
-            r33 = 100 - r3;
-            r44 = 100 - r4;
+            wTR = 100 - wTL;
+            wBR = 100 - wBL;
+            hBL = 100 - hTL;
+            hBR = 100 - hTR;
         } else {
-            r11 = random(5, 96);
-            r22 = random(5, 96);
-            r33 = random(5, 96);
-            r44 = random(5, 96);
+            wTR = random(5, 96);
+            wBR = random(5, 96);
+            hBL = random(5, 96);
+            hBR = random(5, 96);
         }
 
-        return `${r1}% ${r11}% ${r22}% ${r2}% / ${r3}% ${r4}% ${r44}% ${r33}%`;
+        return `${wTL}% ${wTR}% ${wBR}% ${wBL}% / ${hTL}% ${hTR}% ${hBR}% ${hBL}%`;
     }
 
     export default {
@@ -151,6 +152,16 @@
         margin-top: 1rem;
     }
 
+    .bubba-marker {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 20px;
+        height: 20px;
+        background-color: rgba(238, 130, 238, 0.226);
+        border: 1px dashed darkblue;
+    }
+
     .bubbas {
         position: relative;
         width: 400px;
@@ -168,6 +179,8 @@
 
         transition: 1s border-radius;
         margin: 1rem;
+
+        outline: 1px dashed green;
     }
 
     input[type=button], input[type=text] {
@@ -208,14 +221,14 @@
     $border-br: hsl(180, 75%, 50%);
     $border-bl: hsl(270, 75%, 50%);
 
-    .blob-borders {
+    .bubba-borders {
         border-top: var(--border-width) solid $border-tl;
         border-right: var(--border-width) solid $border-tr;
         border-bottom: var(--border-width) solid $border-br;
         border-left: var(--border-width) solid $border-bl;
     }
 
-    .blob-borders-2 {
+    .bubba-borders-alt {
         border-top: 5px solid hsl(120, 100%, 25%);
         border-right: 5px solid hsl(120, 100%, 50%);
         border-bottom: 5px solid hsl(120, 100%, 25%);
