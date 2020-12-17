@@ -67,7 +67,7 @@
                 </div>
 
                 <div class="control-row">
-                    <label>Animate<input type="checkbox" v-model="options.showRects"></label> <!-- TODO: store the last 12 steps of animation in history -->
+                    <label>Animate<input type="checkbox" v-model="options.animate" @change="onAnimate"></label> <!-- TODO: store the last 12 steps of animation in history -->
                     <label>Demo options<input type="checkbox" v-model="options.showRects"></label>
                 </div>
             </template>
@@ -115,7 +115,7 @@
             const generatedCss = ref('23% 77% 82% 18% / 59% 21% 79% 41%'); // ref(generateShape(true));
             const generatedTxt = computed(() => generatedCss.value ? `border-radius: ${generatedCss.value}` : '');
 
-            let options = reactive({
+            let currentOptions = {
                 showControls: true,
                 shapes: 2,
                 borderWidth: 1,
@@ -126,8 +126,8 @@
                 showRects: true,
                 showBorder: true,
                 animate: false,
-                demoOptions: true,
-            });
+                demoOptions: false,
+            };
 
             const demoOptions = {
                 showControls: false,
@@ -140,10 +140,12 @@
                 showRects: true,
                 showBorder: true,
                 animate: false,
-                //demoOptions: true,
+                demoOptions: true,
             };
-            
-            options = reactive({...demoOptions}); //for (const [key, val] of Object.entries(demoOptions)) { options[key] = val; }
+
+            let options = reactive(currentOptions);
+
+            options.demoOptions && (options = reactive(demoOptions));
 
             function getItemCss(num) {
                 return ``;
@@ -160,12 +162,33 @@
 
             let corners = computed(() => generateCorners(generatedCss.value));
 
+            let timerID;
+
+            function onAnimate() {
+                if (options.animate) {
+                    if (timerID) {
+                        clearInterval(timerID);
+                    }
+                    timerID = setInterval(onGenerate, 1500); // This shoild be more then transion on .bubba
+                } else {
+                    if (timerID) {
+                        clearInterval(timerID);
+                        timerID = null;
+                    }
+                }
+            }
+            function onDemoOptions(event) {
+                console.log('e', event.target.checked, options.animate);
+            }
+
             return {
                 options,
                 generatedCss,
                 generatedTxt,
                 getItemTransform,
                 onGenerate,
+                onAnimate,
+                onDemoOptions,
                 corners,
             };
         }
@@ -299,7 +322,6 @@
     .toggle-showborder {
         .legend {
             display: none;
-            display: grid;
             margin-left: 2rem;
 
             column-gap: .2rem;
