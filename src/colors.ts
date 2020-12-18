@@ -59,15 +59,15 @@ export function rgbaToHsla(value: ColorRGB): ColorHSL {
         }
     }
 
-    hue = 60 * hue | 0;
+    hue = Math.round(60 * hue);
     if (hue < 0) {
         hue += 360;
     }
 
     let c: ColorHSL = {
         h: hue,
-        s: (saturation * 100) | 0,
-        l: (lightness * 100) | 0,
+        s: Math.round(saturation * 100),
+        l: Math.round(lightness * 100),
     };
     if (value.a || value.a === 0) {
         c.a = value.a;
