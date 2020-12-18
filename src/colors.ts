@@ -6,10 +6,10 @@ export type ColorRGB = {
 };
 
 export type ColorHSL = {
-    h: number;  // [0.360]
-    s: number;
-    l: number;
-    a?: number;
+    h: number;  // [0..360]
+    s: number;  // [0..100] integer as %
+    l: number;  // [0..100] integer as %
+    a?: number; // [0..1]
 };
 
 export function hexaToRgba(value: string): ColorRGB | undefined {
@@ -74,3 +74,7 @@ export function rgbaToHsla(value: ColorRGB): ColorHSL {
     }
     return c;
 }
+
+    // let base = hexaToRgba('#FDF5E6'); //'oldlace' 'hsl(39, 85.2%, 94.7%)'
+    // let hsl = rgbaToHsla(base);
+    // console.log('c', base, hsl);

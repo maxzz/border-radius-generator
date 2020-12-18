@@ -128,6 +128,23 @@
         return `${wTL}% ${wTR}% ${wBR}% ${wBL}% / ${hTL}% ${hTR}% ${hBR}% ${hBL}%`;
     }
 
+    const paletteTeal = [
+        '#e0f2f1',
+        '#b2dfdb',
+        '#80cbc4',
+        '#4db6ac',
+        '#26a69a',
+        '#009688',
+        '#00897b',
+        '#00796b',
+        '#00695c',
+        '#004d40',
+        '#a7ffeb',
+        '#64ffda',
+        '#1de9b6',
+        '#00bfa5',
+    ];
+
     export default {
         setup() {
             const generatedCss = ref('23% 77% 82% 18% / 59% 21% 79% 41%'); // ref(generateShape(true)); // TODO: allow edit: '10% 90% 28% 72% / 20% 58% 42% 80%'
@@ -180,12 +197,7 @@
                     return 'red';
                 }
 
-                //let base = 'hsl(39, 85.2%, 94.7%)'; //'oldlace'
-                let base = hexaToRgba('#FDF5E6'); //'oldlace'
-                let hsl = rgbaToHsla(base);
-                console.log('c', base, hsl);
-
-                return options.shapes == 1 ? 'red' : 'oldlace';
+                return options.shapes == 1 ? 'red' : paletteTeal[idx % paletteTeal.length];
             }
 
             function onGenerate() {
