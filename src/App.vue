@@ -87,7 +87,7 @@
         }
     }
 
-    function nonreactive(reactiveObj) {
+    function nonReactive(reactiveObj) {
         return JSON.parse(JSON.stringify(reactiveObj));
     }
 
@@ -199,30 +199,10 @@
 
             function onDemoMode(event) {
                 if (options.demoMode) {
-                    // console.log('on1 opt', toRaw(options));
-                    // console.log('on1 opt', JSON.stringify(toRaw(options), null, 4));
-
-                    currentOptions = filterKeys(nonreactive(options), ['demoMode']);
-
-                    // console.log('on2 cur', currentOptions);
-                    // console.log('on2 cur', JSON.stringify(toRaw(currentOptions), null, 4));
-                    
+                    currentOptions = filterKeys(nonReactive(options), ['demoMode']);
                     assignToReactive(options, demoOptions);
-                    // for (const [k, v] of Object.entries(demoOptions)) {
-                    //     options[k] = v;
-                    // }
-
-                    // console.log('on3 cur', currentOptions);
-                    // console.log('on3 cur', JSON.stringify(toRaw(currentOptions), null, 4));
-                    // console.log('on4 opt', options);
                 } else {
-                    //options = reactive(currentOptions);
-                    // console.log('off', toRaw(currentOptions));
-
                     assignToReactive(options, currentOptions);
-                    // for (const [k, v] of Object.entries(currentOptions)) {
-                    //     options[k] = v;
-                    // }
                 }
             }
 
