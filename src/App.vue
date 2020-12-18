@@ -80,6 +80,7 @@
 
 <script>
     import { computed, reactive, ref, toRaw } from 'vue';
+    import { hexaToRgba, rgbaToHsla } from './colors.ts';
 
     function assignToReactive(toObj, fromObj) {
         for (const [k, v] of Object.entries(fromObj)) {
@@ -175,6 +176,15 @@
 
             function getBubbaBackground(num) {
                 let idx = num - 1;
+                if (options.shapes == 1) {
+                    return 'red';
+                }
+
+                //let base = 'hsl(39, 85.2%, 94.7%)'; //'oldlace'
+                let base = hexaToRgba('#FDF5E6'); //'oldlace'
+                let hsl = rgbaToHsla(base);
+                console.log('c', base, hsl);
+
                 return options.shapes == 1 ? 'red' : 'oldlace';
             }
 
@@ -259,7 +269,7 @@
         height: 400px;
         background-color: white;
         border: 10px solid #f9f9f9;
-        box-shadow: 0px 0px 2px 2px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 0 4px 1px rgba(0, 0, 0, 0.1);
     }
 
     .bubba {
