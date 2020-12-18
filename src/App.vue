@@ -1,14 +1,16 @@
 <template>
     <main>
         <div class="bubbas" :style="{'--border-width': `${options.borderWidth}px`}">
-            <div v-for="item of Number(options.shapes)" :key="item" class="bubba" 
+            <div 
+                v-for="item of Number(options.shapes)" :key="item"
+                class="bubba" 
+                :class="{'bubba-borders': options.showBorder}"
                 :style="{
                     borderRadius: generatedCss,
-                    backgroundColor: options.shapes == 1 ? 'red' : 'oldlace',
-                    outline: options.showRects ? '1px dashed green' : 'none',
-                    transform: getItemTransform(item)
+                    transform: getBubbaTransform(item),
+                    backgroundColor: getBubbaBackground(item),
+                    outline: options.showRects ? '1px dashed green' : 'none'
                 }"
-                :class="{'bubba-borders': options.showBorder}"
             >
                 <template v-if="options.showRects">
                     <div class="bubba-marker" :style="{width: corners[0], height: corners[4]}" :title="`top-left\n${corners[0]}, ${corners[4]}`"> </div>
@@ -166,9 +168,14 @@
                 return ``;
             }
 
-            function getItemTransform(num) {
+            function getBubbaTransform(num) {
                 let idx = num - 1;
                 return `scale(${1 - options.scale * idx})  translate(${options.shiftX * idx}px, ${options.shiftY * idx}px)`;
+            }
+
+            function getBubbaBackground(num) {
+                let idx = num - 1;
+                return options.shapes == 1 ? 'red' : 'oldlace';
             }
 
             function onGenerate() {
@@ -208,7 +215,8 @@
                 options,
                 generatedCss,
                 generatedTxt,
-                getItemTransform,
+                getBubbaTransform,
+                getBubbaBackground,
                 onGenerate,
                 onAnimate,
                 onDemoMode,
@@ -249,8 +257,9 @@
         position: relative;
         width: 400px;
         height: 400px;
-        border: 1px dashed red;
-        background-color: #fff;
+        background-color: white;
+        border: 10px solid #f9f9f9;
+        box-shadow: 0px 0px 2px 2px rgba(0, 0, 0, 0.1);
     }
 
     .bubba {
@@ -259,40 +268,40 @@
         top: 0;
         right: 0;
         bottom: 0;
+        //margin: 1rem;
 
         transition: 1s border-radius;
-        margin: 1rem;
     }
 
     .bubba-marker {
         position: absolute;
         outline: 1px dashed yellowgreen;
-    }
 
-    $marker-opacity: .6;
+        $marker-opacity: .6;
 
-    .bubba-marker:nth-child(1) {
-        top: 0;
-        left: 0;
-        background-color: transparentize($border-tl, $marker-opacity);
-    }
+        &:nth-child(1) {
+            top: 0;
+            left: 0;
+            background-color: transparentize($border-tl, $marker-opacity);
+        }
 
-    .bubba-marker:nth-child(2) {
-        top: 0;
-        right: 0;
-        background-color: transparentize($border-tr, $marker-opacity);
-    }
+        &:nth-child(2) {
+            top: 0;
+            right: 0;
+            background-color: transparentize($border-tr, $marker-opacity);
+        }
 
-    .bubba-marker:nth-child(3) {
-        bottom: 0;
-        right: 0;
-        background-color: transparentize($border-br, $marker-opacity);
-    }
+        &:nth-child(3) {
+            bottom: 0;
+            right: 0;
+            background-color: transparentize($border-br, $marker-opacity);
+        }
 
-    .bubba-marker:nth-child(4) {
-        bottom: 0;
-        left: 0;
-        background-color: transparentize($border-bl, $marker-opacity);
+        &:nth-child(4) {
+            bottom: 0;
+            left: 0;
+            background-color: transparentize($border-bl, $marker-opacity);
+        }
     }
 
     input[type=button], input[type=text] {
