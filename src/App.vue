@@ -81,10 +81,19 @@
 <script>
     import { computed, reactive, ref, toRaw } from 'vue';
 
-    function assignToReactive(to, from) {
-        for (const [k, v] of Object.entries(from)) {
-            to[k] = v;
+    function assignToReactive(toObj, fromObj) {
+        for (const [k, v] of Object.entries(fromObj)) {
+            toObj[k] = v;
         }
+    }
+
+    function nonreactive(reactiveObj) {
+        return JSON.parse(JSON.stringify(reactiveObj));
+    }
+
+    function filterKeys(obj, keys) {
+        keys = keys || [];
+        return Object.fromEntries(Object.entries(obj).filter(([k, v]) => !keys.includes(k)));
     }
 
     function random(min, max){
@@ -190,24 +199,25 @@
 
             function onDemoMode(event) {
                 if (options.demoMode) {
-                    console.log('on1 opt', toRaw(options));
-                    console.log('on1 opt', JSON.stringify(toRaw(options), null, 4));
+                    // console.log('on1 opt', toRaw(options));
+                    // console.log('on1 opt', JSON.stringify(toRaw(options), null, 4));
 
-                    currentOptions = toRaw(options);
-                    console.log('on2 cur', currentOptions);
-                    console.log('on2 cur', JSON.stringify(toRaw(currentOptions), null, 4));
+                    currentOptions = filterKeys(nonreactive(options), ['demoMode']);
+
+                    // console.log('on2 cur', currentOptions);
+                    // console.log('on2 cur', JSON.stringify(toRaw(currentOptions), null, 4));
                     
-                    //assignToReactive(options, demoOptions);
+                    assignToReactive(options, demoOptions);
                     // for (const [k, v] of Object.entries(demoOptions)) {
                     //     options[k] = v;
                     // }
 
-                    console.log('on3 cur', currentOptions);
-                    console.log('on3 cur', JSON.stringify(toRaw(currentOptions), null, 4));
-                    console.log('on4 opt', options);
+                    // console.log('on3 cur', currentOptions);
+                    // console.log('on3 cur', JSON.stringify(toRaw(currentOptions), null, 4));
+                    // console.log('on4 opt', options);
                 } else {
                     //options = reactive(currentOptions);
-                    console.log('off', toRaw(currentOptions));
+                    // console.log('off', toRaw(currentOptions));
 
                     assignToReactive(options, currentOptions);
                     // for (const [k, v] of Object.entries(currentOptions)) {
