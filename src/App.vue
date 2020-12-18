@@ -73,8 +73,6 @@
             </template>
         </div>
 
-        <pre>{{options}}</pre>
-
     </main>
 </template>
 
@@ -331,17 +329,13 @@
     }
 
     .bubba-borders {
-        border-top: var(--border-width) solid $border-tl;
-        border-right: var(--border-width) solid $border-tr;
-        border-bottom: var(--border-width) solid $border-br;
-        border-left: var(--border-width) solid $border-bl;
+        border: var(--border-width) solid;
+        border-color: $border-tl $border-tr $border-br $border-bl;
     }
 
     .bubba-borders-alt {
-        border-top: 5px solid hsl(120, 100%, 25%);
-        border-right: 5px solid hsl(120, 100%, 50%);
-        border-bottom: 5px solid hsl(120, 100%, 25%);
-        border-left: 5px solid hsl(120, 100%, 50%);
+        border: var(--border-width) solid;
+        border-color: hsl(120, 100%, 25%) hsl(120, 100%, 50%);
     }
 
     .toggle-showborder {
