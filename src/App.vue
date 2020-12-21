@@ -68,29 +68,33 @@
                     <label>x: <input type="range" min="-50" max="50" step="1" v-model="options.shiftX"><span class="value-disp">{{options.shiftX}}</span></label>
                     <label>y: <input type="range" min="-50" max="50" step="1" v-model="options.shiftY"><span class="value-disp">{{options.shiftY}}</span></label>
                 </div>
-        
+
                 <div class="control-row">
                     <label>Generate symmetrical corners<input type="checkbox" v-model="options.symmetrical"></label>
                 </div>
 
-                <div class="control-row">
-                    <label>Show corner rectangles<input type="checkbox" v-model="options.showRects"></label>
-                </div>
+                <fieldset>
+                    <legend>Show options</legend>
+    
+                    <div class="control-row">
+                        <label>Show corner rectangles<input type="checkbox" v-model="options.showRects"></label>
+                    </div>
+    
+                    <div class="control-row">
+                        <label>Show SVG frame<input type="checkbox" v-model="options.showSvgFrame"></label>
+                    </div>
 
-                <div class="control-row">
-                    <label>Show SVG frame<input type="checkbox" v-model="options.showSvgFrame"></label>
-                </div>
-
-                <div class="control-row">
-                    <label class="toggle-showborder">Show borders<input type="checkbox" v-model="options.showBorder">
-                        <div v-show="options.showBorder" class="legend">
-                            <span class="legend-tl" title="top-left">T-L</span>
-                            <span class="legend-tr" title="top-right">T-R</span>
-                            <span class="legend-br" title="bottom-right">B-R</span>
-                            <span class="legend-bl" title="bottom-left">B-L</span>
-                        </div>
-                    </label>
-                </div>
+                    <div class="control-row">
+                        <label class="toggle-showborder">Show borders<input type="checkbox" v-model="options.showBorder">
+                            <div v-show="options.showBorder" class="legend">
+                                <span class="legend-tl" title="top-left">T-L</span>
+                                <span class="legend-tr" title="top-right">T-R</span>
+                                <span class="legend-br" title="bottom-right">B-R</span>
+                                <span class="legend-bl" title="bottom-left">B-L</span>
+                            </div>
+                        </label>
+                    </div>
+                </fieldset>
 
                 <div class="control-row">
                     <label>Animate<input type="checkbox" v-model="options.animate" @change="onAnimate"></label> <!-- TODO: store the last 12 steps of animation in history -->
@@ -449,6 +453,17 @@
 
         .double-range input {
             width: 7rem;
+        }
+
+        fieldset {
+            padding: .4em 1em .4em 1.4em;
+            border: 1px solid #888;
+            border-radius: 3px;
+
+            & legend {
+                padding: 0 .4em;
+                margin-left: -.4em;
+            }
         }
     }
 
