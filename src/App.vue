@@ -298,8 +298,10 @@
         box-shadow: 0 0 4px 1px rgba(0, 0, 0, 0.1);
         
         justify-self: center;
-        resize: both;
         overflow: auto;
+        resize: both;
+        min-width: 100px;
+        min-height: 100px;
     }
 
     .bubba {
