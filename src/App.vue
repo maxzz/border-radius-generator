@@ -24,17 +24,17 @@
                         '--h3': corners[7],
                     }"
                 >
-                    <!-- <template v-if="options.showRects">
-                        <div class="bubba-marker bm-tl" :style="{width: corners[0], height: corners[4]}" :title="`top-left\n${corners[0]}, ${corners[4]}`"> </div>
-                        <div class="bubba-marker bm-tr" :style="{width: corners[1], height: corners[5]}" :title="`top-right\n${corners[1]}, ${corners[5]}`"></div>
-                        <div class="bubba-marker bm-br" :style="{width: corners[2], height: corners[6]}" :title="`bottom-right\n${corners[2]}, ${corners[6]}`"></div>
-                        <div class="bubba-marker bm-bl" :style="{width: corners[3], height: corners[7]}" :title="`bottom-left\n${corners[3]}, ${corners[7]}`"></div>
-                    </template> -->
+                    <template v-if="options.showRects">
+                        <div class="bubba-marker bm-tl" :title="`top-left\n${corners[0]}, ${corners[4]}`"> </div>
+                        <div class="bubba-marker bm-tr" :title="`top-right\n${corners[1]}, ${corners[5]}`"></div>
+                        <div class="bubba-marker bm-br" :title="`bottom-right\n${corners[2]}, ${corners[6]}`"></div>
+                        <div class="bubba-marker bm-bl" :title="`bottom-left\n${corners[3]}, ${corners[7]}`"></div>
+                    </template>
     
-                    <svg class="bubba-marker bm-tl" :style="{width: corners[0], height: corners[4]}"> <ellipse :cx="`100%`" :cy="`100%`" :rx="`100%`" :ry="`100%`"/> </svg>
-                    <svg class="bubba-marker bm-tr" :width="corners[1]" :height="corners[5]"> <ellipse :cx="`0%`" :cy="`100%`" :rx="`100%`" :ry="`100%`"/> </svg>
-                    <svg class="bubba-marker bm-br" :width="corners[2]" :height="corners[6]"> <ellipse :cx="`0%`" :cy="`0%`" :rx="`100%`" :ry="`100%`"/> </svg>
-                    <svg class="bubba-marker bm-bl" :width="corners[3]" :height="corners[7]"> <ellipse :cx="`100%`" :cy="`0%`" :rx="`100%`" :ry="`100%`"/> </svg>
+                    <!-- <svg class="bubba-marker bm-tl"> <ellipse :cx="`100%`" :cy="`100%`" :rx="`100%`" :ry="`100%`"/> </svg>
+                    <svg class="bubba-marker bm-tr"> <ellipse :cx="`0%`" :cy="`100%`" :rx="`100%`" :ry="`100%`"/> </svg>
+                    <svg class="bubba-marker bm-br"> <ellipse :cx="`0%`" :cy="`0%`" :rx="`100%`" :ry="`100%`"/> </svg>
+                    <svg class="bubba-marker bm-bl"> <ellipse :cx="`100%`" :cy="`0%`" :rx="`100%`" :ry="`100%`"/> </svg> -->
                 </div>
 
                 <span v-if="options.showBorder">{{item}}</span>
@@ -338,6 +338,34 @@
         transition: 1s border-radius;
     }
 
+    .bm-tl {
+        top: 0;
+        left: 0;
+        width: var(--w0);
+        height: var(--h0);
+    }
+
+    .bm-tr {
+        top: 0;
+        right: 0;
+        width: var(--w1);
+        height: var(--h1);
+    }
+
+    .bm-br {
+        bottom: 0;
+        right: 0;
+        width: var(--w2);
+        height: var(--h2);
+    }
+
+    .bm-bl {
+        bottom: 0;
+        left: 0;
+        width: var(--w3);
+        height: var(--h3);
+    }
+
     .bubba-marker {
         position: absolute;
         outline: 1px dashed yellowgreen;
@@ -345,26 +373,18 @@
         $marker-opacity: .6;
 
         &.bm-tl {
-            top: 0;
-            left: 0;
             background-color: transparentize($border-tl, $marker-opacity);
         }
 
         &.bm-tr {
-            top: 0;
-            right: 0;
             background-color: transparentize($border-tr, $marker-opacity);
         }
 
         &.bm-br {
-            bottom: 0;
-            right: 0;
             background-color: transparentize($border-br, $marker-opacity);
         }
 
         &.bm-bl {
-            bottom: 0;
-            left: 0;
             background-color: transparentize($border-bl, $marker-opacity);
         }
     }
