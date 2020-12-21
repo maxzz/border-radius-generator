@@ -25,16 +25,18 @@
                     }"
                 >
                     <template v-if="options.showRects">
-                        <div class="bubba-marker bm-tl" :title="`top-left\n${corners[0]}, ${corners[4]}`"> </div>
-                        <div class="bubba-marker bm-tr" :title="`top-right\n${corners[1]}, ${corners[5]}`"></div>
-                        <div class="bubba-marker bm-br" :title="`bottom-right\n${corners[2]}, ${corners[6]}`"></div>
-                        <div class="bubba-marker bm-bl" :title="`bottom-left\n${corners[3]}, ${corners[7]}`"></div>
+                        <div class="css-marker bm-tl" :title="`top-left\n${corners[0]}, ${corners[4]}`"> </div>
+                        <div class="css-marker bm-tr" :title="`top-right\n${corners[1]}, ${corners[5]}`"></div>
+                        <div class="css-marker bm-br" :title="`bottom-right\n${corners[2]}, ${corners[6]}`"></div>
+                        <div class="css-marker bm-bl" :title="`bottom-left\n${corners[3]}, ${corners[7]}`"></div>
                     </template>
     
-                    <!-- <svg class="bubba-marker bm-tl"> <ellipse :cx="`100%`" :cy="`100%`" :rx="`100%`" :ry="`100%`"/> </svg>
-                    <svg class="bubba-marker bm-tr"> <ellipse :cx="`0%`" :cy="`100%`" :rx="`100%`" :ry="`100%`"/> </svg>
-                    <svg class="bubba-marker bm-br"> <ellipse :cx="`0%`" :cy="`0%`" :rx="`100%`" :ry="`100%`"/> </svg>
-                    <svg class="bubba-marker bm-bl"> <ellipse :cx="`100%`" :cy="`0%`" :rx="`100%`" :ry="`100%`"/> </svg> -->
+                    <template v-if="options.showSvgFrame">
+                        <svg class="svg-marker bm-tl"> <ellipse :cx="`100%`" :cy="`100%`" :rx="`100%`" :ry="`100%`"/> </svg>
+                        <svg class="svg-marker bm-tr"> <ellipse :cx="`0%`" :cy="`100%`" :rx="`100%`" :ry="`100%`"/> </svg>
+                        <svg class="svg-marker bm-br"> <ellipse :cx="`0%`" :cy="`0%`" :rx="`100%`" :ry="`100%`"/> </svg>
+                        <svg class="svg-marker bm-bl"> <ellipse :cx="`100%`" :cy="`0%`" :rx="`100%`" :ry="`100%`"/> </svg>
+                    </template>
                 </div>
 
                 <span v-if="options.showBorder">{{item}}</span>
@@ -76,7 +78,11 @@
                 </div>
 
                 <div class="control-row">
-                    <label class="toggle-showborder">Show border<input type="checkbox" v-model="options.showBorder">
+                    <label>Show SVG frame<input type="checkbox" v-model="options.showSvgFrame"></label>
+                </div>
+
+                <div class="control-row">
+                    <label class="toggle-showborder">Show borders<input type="checkbox" v-model="options.showBorder">
                         <div v-show="options.showBorder" class="legend">
                             <span class="legend-tl" title="top-left">T-L</span>
                             <span class="legend-tr" title="top-right">T-R</span>
@@ -178,6 +184,7 @@
                 symmetrical: true,
                 showRects: true,
                 showBorder: true,
+                showSvgFrame: true,
                 animate: false,
                 demoMode: false,
             };
@@ -192,6 +199,7 @@
                 symmetrical: true,
                 showRects: true,
                 showBorder: true,
+                showSvgFrame: true,
                 animate: true,
                 demoMode: true,
             };
@@ -206,6 +214,7 @@
                 symmetrical: true,
                 showRects: false,
                 showBorder: true,
+                showSvgFrame: true,
                 animate: true,
                 demoMode: true,
             };
@@ -366,12 +375,12 @@
         height: var(--h3);
     }
 
-    .bubba-marker {
+    .css-marker {
         position: absolute;
         outline: 1px dashed yellowgreen;
 
         $marker-opacity: .6;
-
+        
         &.bm-tl {
             background-color: transparentize($border-tl, $marker-opacity);
         }
@@ -389,18 +398,25 @@
         }
     }
 
-    svg.bubba-marker ellipse {
-        background-color: transparent;
-        fill: yellow;
-        // fill: rgba(0, 255, 0, .2);
-        //fill: none;
-        stroke: green;
-        stroke-width: 1;
-        //transition: all 2s;
-    }
+    .svg-marker {
+        position: absolute;
+        outline: 1px dashed yellowgreen;
 
-    svg.bubba-marker {
-        background-color: red;
+        $marker-opacity: .6;
+
+        //background-color: red;
+        //background-color: pink;
+        //background-color: transparent;
+        //fill: rgba(0, 255, 0, .2);
+
+        & ellipse {
+            // fill: yellow;
+            fill: none;
+            fill: rgba(0, 255, 0, .2);
+            stroke: green;
+            stroke-width: 1;
+            //transition: all 2s;
+        }
     }
 
     input[type=button], input[type=text] {
