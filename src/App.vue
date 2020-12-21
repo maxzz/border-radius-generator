@@ -80,7 +80,7 @@
 
 <script>
     import { computed, reactive, ref, toRaw } from 'vue';
-    import { hexaToRgba, rgbaToHsla } from './colors.ts';
+    //import { hexaToRgba, rgbaToHsla } from './colors.ts';
 
     function assignToReactive(toObj, fromObj) {
         for (const [k, v] of Object.entries(fromObj)) {
@@ -173,6 +173,20 @@
                 shiftY: 7,
                 symmetrical: true,
                 showRects: true,
+                showBorder: true,
+                animate: true,
+                demoMode: true,
+            };
+
+            const demoOptions2 = {
+                showControls: true,
+                shapes: 18,
+                borderWidth: 1,
+                scale: .0947,
+                shiftX: 20,
+                shiftY: 6,
+                symmetrical: true,
+                showRects: false,
                 showBorder: true,
                 animate: true,
                 demoMode: true,
@@ -282,6 +296,10 @@
         background-color: white;
         border: 10px solid #f9f9f9;
         box-shadow: 0 0 4px 1px rgba(0, 0, 0, 0.1);
+        
+        justify-self: center;
+        resize: both;
+        overflow: auto;
     }
 
     .bubba {
@@ -291,6 +309,7 @@
         right: 0;
         bottom: 0;
         //margin: 1rem;
+        user-select: none;
 
         transition: 1s border-radius;
     }
