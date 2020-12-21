@@ -245,6 +245,7 @@
                 } else {
                     assignToReactive(options, currentOptions);
                 }
+                onAnimate();
             }
 
             return {
@@ -310,9 +311,7 @@
         top: 0;
         right: 0;
         bottom: 0;
-        //margin: 1rem;
         user-select: none;
-
         transition: 1s border-radius;
     }
 
