@@ -1,27 +1,25 @@
 <template>
     <main>
-        <div class="bubbas-resize">
-            <div class="bubbas" :style="{'--border-width': `${options.borderWidth}px`}">
-                <div 
-                    v-for="item of Number(options.shapes)" :key="item"
-                    class="bubba" 
-                    :class="{'bubba-borders': options.showBorder}"
-                    :style="{
-                        borderRadius: generatedCss,
-                        transform: getBubbaTransform(item),
-                        backgroundColor: getBubbaBackground(item),
-                        outline: options.showRects ? '1px dashed green' : 'none'
-                    }"
-                >
-                    <template v-if="options.showRects">
-                        <div class="bubba-marker" :style="{width: corners[0], height: corners[4]}" :title="`top-left\n${corners[0]}, ${corners[4]}`"> </div>
-                        <div class="bubba-marker" :style="{width: corners[1], height: corners[5]}" :title="`top-right\n${corners[1]}, ${corners[5]}`"></div>
-                        <div class="bubba-marker" :style="{width: corners[2], height: corners[6]}" :title="`bottom-right\n${corners[2]}, ${corners[6]}`"></div>
-                        <div class="bubba-marker" :style="{width: corners[3], height: corners[7]}" :title="`bottom-left\n${corners[3]}, ${corners[7]}`"></div>
-                    </template>
-    
-                    <span v-if="options.showBorder">{{item}}</span>
-                </div>
+        <div class="bubbas" :style="{'--border-width': `${options.borderWidth}px`}">
+            <div 
+                v-for="item of Number(options.shapes)" :key="item"
+                class="bubba" 
+                :class="{'bubba-borders': options.showBorder}"
+                :style="{
+                    borderRadius: generatedCss,
+                    transform: getBubbaTransform(item),
+                    backgroundColor: getBubbaBackground(item),
+                    outline: options.showRects ? '1px dashed green' : 'none'
+                }"
+            >
+                <template v-if="options.showRects">
+                    <div class="bubba-marker" :style="{width: corners[0], height: corners[4]}" :title="`top-left\n${corners[0]}, ${corners[4]}`"> </div>
+                    <div class="bubba-marker" :style="{width: corners[1], height: corners[5]}" :title="`top-right\n${corners[1]}, ${corners[5]}`"></div>
+                    <div class="bubba-marker" :style="{width: corners[2], height: corners[6]}" :title="`bottom-right\n${corners[2]}, ${corners[6]}`"></div>
+                    <div class="bubba-marker" :style="{width: corners[3], height: corners[7]}" :title="`bottom-left\n${corners[3]}, ${corners[7]}`"></div>
+                </template>
+
+                <span v-if="options.showBorder">{{item}}</span>
             </div>
         </div>
 
@@ -291,21 +289,13 @@
         margin-top: 1rem;
     }
 
-    .bubbas-resize {
-        resize: both;
-        overflow: auto;
-        box-shadow: 0 0 4px 1px rgba(0, 0, 0, 0.1);
-    }
-
     .bubbas {
         position: relative;
-        width: 100%;
-        height: 100%;
-        // width: 400px;
-        // height: 400px;
+        width: 400px;
+        height: 400px;
         background-color: white;
         border: 10px solid #f9f9f9;
-        //box-shadow: 0 0 4px 1px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 0 4px 1px rgba(0, 0, 0, 0.1);
         
         justify-self: center;
         overflow: auto;
