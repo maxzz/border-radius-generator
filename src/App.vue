@@ -13,11 +13,16 @@
                 }"
             >
                 <template v-if="options.showRects">
-                    <div class="bubba-marker" :style="{width: corners[0], height: corners[4]}" :title="`top-left\n${corners[0]}, ${corners[4]}`"> </div>
-                    <div class="bubba-marker" :style="{width: corners[1], height: corners[5]}" :title="`top-right\n${corners[1]}, ${corners[5]}`"></div>
-                    <div class="bubba-marker" :style="{width: corners[2], height: corners[6]}" :title="`bottom-right\n${corners[2]}, ${corners[6]}`"></div>
-                    <div class="bubba-marker" :style="{width: corners[3], height: corners[7]}" :title="`bottom-left\n${corners[3]}, ${corners[7]}`"></div>
+                    <div class="bubba-marker bm-tl" :style="{width: corners[0], height: corners[4]}" :title="`top-left\n${corners[0]}, ${corners[4]}`"> </div>
+                    <div class="bubba-marker bm-tr" :style="{width: corners[1], height: corners[5]}" :title="`top-right\n${corners[1]}, ${corners[5]}`"></div>
+                    <div class="bubba-marker bm-br" :style="{width: corners[2], height: corners[6]}" :title="`bottom-right\n${corners[2]}, ${corners[6]}`"></div>
+                    <div class="bubba-marker bm-bl" :style="{width: corners[3], height: corners[7]}" :title="`bottom-left\n${corners[3]}, ${corners[7]}`"></div>
                 </template>
+
+<!-- :viewBox="`-${woPersent(corners[0])} -${woPersent(corners[4])} ${woPersent(corners[0])} ${woPersent(corners[4])}`" -->
+                <svg class="bubba-marker bm-tl" :width="corners[0]" :height="corners[4]">
+                    <ellipse :cx="`100%`" :cy="`100%`" :rx="`100%`" :ry="`100%`" style="fill: rgba(0, 255, 0, .2); stroke: green; stroke-width: 1"/>
+                </svg>
 
                 <span v-if="options.showBorder">{{item}}</span>
             </div>
@@ -74,6 +79,10 @@
                 </div>
             </template>
         </div>
+
+        <pre>
+            {{corners}}
+        </pre>
 
     </main>
 </template>
@@ -152,7 +161,7 @@
 
             const defaultOptions = {
                 showControls: true,
-                shapes: 2,
+                shapes: 1,
                 borderWidth: 1,
                 scale: .1,
                 shiftX: 20,
@@ -248,6 +257,10 @@
                 onAnimate();
             }
 
+            function woPersent(v) {
+                return v.replace('%', '');
+            }
+
             return {
                 options,
                 generatedCss,
@@ -258,6 +271,7 @@
                 onAnimate,
                 onDemoMode,
                 corners,
+                woPersent,
             };
         }
     };
@@ -321,25 +335,25 @@
 
         $marker-opacity: .6;
 
-        &:nth-child(1) {
+        &.bm-tl {
             top: 0;
             left: 0;
             background-color: transparentize($border-tl, $marker-opacity);
         }
 
-        &:nth-child(2) {
+        &.bm-tr {
             top: 0;
             right: 0;
             background-color: transparentize($border-tr, $marker-opacity);
         }
 
-        &:nth-child(3) {
+        &.bm-br {
             bottom: 0;
             right: 0;
             background-color: transparentize($border-br, $marker-opacity);
         }
 
-        &:nth-child(4) {
+        &.bm-bl {
             bottom: 0;
             left: 0;
             background-color: transparentize($border-bl, $marker-opacity);
