@@ -9,7 +9,7 @@
                     borderRadius: generatedCss,
                     transform: getBubbaTransform(item),
                     backgroundColor: getBubbaBackground(item),
-                    outline: options.showRects ? '1px dashed green' : 'none'
+                    outline: options.showCssRects ? '1px dashed green' : 'none'
                 }"
             >
                 <div class="markers"
@@ -24,18 +24,18 @@
                         '--h3': corners[7],
                     }"
                 >
-                    <template v-if="options.showRects">
+                    <template v-if="options.showCssRects">
                         <div class="css-marker bm-tl" :title="`top-left\n${corners[0]}, ${corners[4]}`"> </div>
                         <div class="css-marker bm-tr" :title="`top-right\n${corners[1]}, ${corners[5]}`"></div>
                         <div class="css-marker bm-br" :title="`bottom-right\n${corners[2]}, ${corners[6]}`"></div>
                         <div class="css-marker bm-bl" :title="`bottom-left\n${corners[3]}, ${corners[7]}`"></div>
                     </template>
-    
+
                     <template v-if="options.showSvgFrame">
-                        <svg class="svg-marker bm-tl"> <ellipse :cx="`100%`" :cy="`100%`" :rx="`100%`" :ry="`100%`"/> </svg>
-                        <svg class="svg-marker bm-tr"> <ellipse :cx="`0%`" :cy="`100%`" :rx="`100%`" :ry="`100%`"/> </svg>
-                        <svg class="svg-marker bm-br"> <ellipse :cx="`0%`" :cy="`0%`" :rx="`100%`" :ry="`100%`"/> </svg>
-                        <svg class="svg-marker bm-bl"> <ellipse :cx="`100%`" :cy="`0%`" :rx="`100%`" :ry="`100%`"/> </svg>
+                        <svg class="svg-marker bm-tl" :style="{fill: options.showSvgRects ? 'rgba(0, 255, 0, .2)' : 'none'}"> <ellipse :cx="`100%`" :cy="`100%`" :rx="`100%`" :ry="`100%`"/> </svg>
+                        <svg class="svg-marker bm-tr" :style="{fill: options.showSvgRects ? 'rgba(0, 255, 0, .2)' : 'none'}"> <ellipse :cx="`0%`" :cy="`100%`" :rx="`100%`" :ry="`100%`"/> </svg>
+                        <svg class="svg-marker bm-br" :style="{fill: options.showSvgRects ? 'rgba(0, 255, 0, .2)' : 'none'}"> <ellipse :cx="`0%`" :cy="`0%`" :rx="`100%`" :ry="`100%`"/> </svg>
+                        <svg class="svg-marker bm-bl" :style="{fill: options.showSvgRects ? 'rgba(0, 255, 0, .2)' : 'none'}"> <ellipse :cx="`100%`" :cy="`0%`" :rx="`100%`" :ry="`100%`"/> </svg>
                     </template>
                 </div>
 
@@ -77,7 +77,11 @@
                     <legend>Show options</legend>
     
                     <div class="control-row">
-                        <label>Show corner rectangles<input type="checkbox" v-model="options.showRects"></label>
+                        <label>Show CSS corner rectangles<input type="checkbox" v-model="options.showCssRects"></label>
+                    </div>
+    
+                    <div class="control-row">
+                        <label>Show SVG corner rectangles<input type="checkbox" v-model="options.showSvgRects"></label>
                     </div>
     
                     <div class="control-row">
@@ -186,7 +190,8 @@
                 shiftX: 20,
                 shiftY: 20,
                 symmetrical: true,
-                showRects: true,
+                showCssRects: true,
+                showSvgRects: true,
                 showBorder: true,
                 showSvgFrame: true,
                 animate: false,
@@ -201,7 +206,8 @@
                 shiftX: 9,
                 shiftY: 7,
                 symmetrical: true,
-                showRects: true,
+                showCssRects: true,
+                showSvgRects: true,
                 showBorder: true,
                 showSvgFrame: true,
                 animate: true,
@@ -216,7 +222,8 @@
                 shiftX: 20,
                 shiftY: 6,
                 symmetrical: true,
-                showRects: false,
+                showCssRects: false,
+                showSvgRects: true,
                 showBorder: true,
                 showSvgFrame: true,
                 animate: true,
@@ -415,8 +422,8 @@
 
         & ellipse {
             // fill: yellow;
-            fill: none;
-            fill: rgba(0, 255, 0, .2);
+            // fill: none;
+            // fill: rgba(0, 255, 0, .2);
             stroke: green;
             stroke-width: 1;
             //transition: all 2s;
