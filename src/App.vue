@@ -32,10 +32,10 @@
                     </template>
 
                     <template v-if="options.showSvgFrame">
-                        <svg class="svg-marker bm-tl" :style="{fill: options.showSvgRects ? 'rgba(0, 255, 0, .2)' : 'none'}"> <ellipse :cx="`100%`" :cy="`100%`" :rx="`100%`" :ry="`100%`"/> </svg>
-                        <svg class="svg-marker bm-tr" :style="{fill: options.showSvgRects ? 'rgba(0, 255, 0, .2)' : 'none'}"> <ellipse :cx="`0%`" :cy="`100%`" :rx="`100%`" :ry="`100%`"/> </svg>
-                        <svg class="svg-marker bm-br" :style="{fill: options.showSvgRects ? 'rgba(0, 255, 0, .2)' : 'none'}"> <ellipse :cx="`0%`" :cy="`0%`" :rx="`100%`" :ry="`100%`"/> </svg>
-                        <svg class="svg-marker bm-bl" :style="{fill: options.showSvgRects ? 'rgba(0, 255, 0, .2)' : 'none'}"> <ellipse :cx="`100%`" :cy="`0%`" :rx="`100%`" :ry="`100%`"/> </svg>
+                        <svg class="svg-marker bm-tl" :style="{fill: options.showSvgRects ? 'rgba(0, 255, 0, .2)' : 'none'}"> <ellipse pathLenght="1" :cx="`100%`" :cy="`100%`" :rx="`100%`" :ry="`100%`"/> </svg>
+                        <svg class="svg-marker bm-tr" :style="{fill: options.showSvgRects ? 'rgba(0, 255, 0, .2)' : 'none'}"> <ellipse pathLenght="1" :cx="`0%`" :cy="`100%`" :rx="`100%`" :ry="`100%`"/> </svg>
+                        <svg class="svg-marker bm-br" :style="{fill: options.showSvgRects ? 'rgba(0, 255, 0, .2)' : 'none'}"> <ellipse pathLenght="1" :cx="`0%`" :cy="`0%`" :rx="`100%`" :ry="`100%`"/> </svg>
+                        <svg class="svg-marker bm-bl" :style="{fill: options.showSvgRects ? 'rgba(0, 255, 0, .2)' : 'none'}"> <ellipse pathLenght="1" :cx="`100%`" :cy="`0%`" :rx="`100%`" :ry="`100%`"/> </svg>
                     </template>
                 </div>
 
@@ -46,6 +46,12 @@
         <input type="text" :value="generatedTxt" readonly>
 
         <input type="button" value="Generate" @click="onGenerate">
+
+        <svg width="160px" height="160px" viewBox="-40 -40 80 80">
+            <!-- <path d="M-30,0a30,30 0 1,0 60,0a30,30 0 1,0 -60,0" /> -->
+            <!-- <path d="M-20,0a20,40 0 1,0 40,0a20,40 0 1,0 -40,0" /> -->
+            <path d="M-20,0a20,40 0 1,0 40,0Z" fill="none" stroke="green" pathLength="1"/>
+        </svg>
 
         <div class="control-panel">
             <input type="button" class="controls-header" @click="options.showControls = !options.showControls" :value="options.showControls ? 'Hide controls' : 'Show controls'" />
@@ -364,32 +370,34 @@
         transition: 1s border-radius;
     }
 
-    .bm-tl {
-        top: 0;
-        left: 0;
-        width: var(--w0);
-        height: var(--h0);
-    }
+    .markers {
+        .bm-tl {
+            top: 0;
+            left: 0;
+            width: var(--w0);
+            height: var(--h0);
+        }
 
-    .bm-tr {
-        top: 0;
-        right: 0;
-        width: var(--w1);
-        height: var(--h1);
-    }
+        .bm-tr {
+            top: 0;
+            right: 0;
+            width: var(--w1);
+            height: var(--h1);
+        }
 
-    .bm-br {
-        bottom: 0;
-        right: 0;
-        width: var(--w2);
-        height: var(--h2);
-    }
+        .bm-br {
+            bottom: 0;
+            right: 0;
+            width: var(--w2);
+            height: var(--h2);
+        }
 
-    .bm-bl {
-        bottom: 0;
-        left: 0;
-        width: var(--w3);
-        height: var(--h3);
+        .bm-bl {
+            bottom: 0;
+            left: 0;
+            width: var(--w3);
+            height: var(--h3);
+        }
     }
 
     .css-marker {
