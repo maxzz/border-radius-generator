@@ -12,7 +12,7 @@
                     outline: options.showCssRects ? '1px dashed green' : 'none'
                 }"
             >
-                <div class="markers" v-if="item === Number(options.shapes)"
+                <div class="markers" v-if="!options.showOnlyOneRect || item === Number(options.shapes)"
                     :style="{
                         '--w0': corners[0],
                         '--w1': corners[1],
@@ -89,6 +89,10 @@
                     </div>
 
                     <div class="control-row">
+                        <label>Show corners only on the last rectangle<input type="checkbox" v-model="options.showOnlyOneRect"></label>
+                    </div>
+
+                    <div class="control-row">
                         <label class="toggle-showborder">Show borders<input type="checkbox" v-model="options.showBorder">
                             <div v-show="options.showBorder" class="legend">
                                 <span class="legend-tl" title="top-left">T-L</span>
@@ -112,7 +116,6 @@
 
 <script>
     import { computed, reactive, ref, toRaw } from 'vue';
-    //import { hexaToRgba, rgbaToHsla } from './colors.ts';
 
     function assignToReactive(toObj, fromObj) {
         for (const [k, v] of Object.entries(fromObj)) {
@@ -194,6 +197,7 @@
                 showSvgRects: true,
                 showBorder: true,
                 showSvgFrame: true,
+                showOnlyOneRect: true,
                 animate: false,
                 demoMode: false,
             };
@@ -210,25 +214,27 @@
                 showSvgRects: true,
                 showBorder: true,
                 showSvgFrame: true,
+                showOnlyOneRect: false,
                 animate: true,
                 demoMode: true,
             };
 
-            const demoOptions2 = {
-                showControls: true,
-                shapes: 18,
-                borderWidth: 1,
-                scale: .0947,
-                shiftX: 20,
-                shiftY: 6,
-                symmetrical: true,
-                showCssRects: false,
-                showSvgRects: true,
-                showBorder: true,
-                showSvgFrame: true,
-                animate: true,
-                demoMode: true,
-            };
+            // const demoOptions2 = {
+            //     showControls: true,
+            //     shapes: 18,
+            //     borderWidth: 1,
+            //     scale: .0947,
+            //     shiftX: 20,
+            //     shiftY: 6,
+            //     symmetrical: true,
+            //     showCssRects: false,
+            //     showSvgRects: true,
+            //     showBorder: true,
+            //     showSvgFrame: true,
+            //     showOnlyOneRect: true,
+            //     animate: true,
+            //     demoMode: true,
+            // };
 
             let options = reactive(defaultOptions);
 
