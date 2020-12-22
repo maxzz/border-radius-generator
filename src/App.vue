@@ -12,7 +12,7 @@
                     outline: options.showCssRects ? '1px dashed green' : 'none'
                 }"
             >
-                <div class="markers"
+                <div class="markers" v-if="item === Number(options.shapes)"
                     :style="{
                         '--w0': corners[0],
                         '--w1': corners[1],
