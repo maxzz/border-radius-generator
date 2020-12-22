@@ -24,18 +24,23 @@
                         '--h3': corners[7],
                     }"
                 >
-                    <template v-if="options.showCssRects">
+                    <!-- <template v-if="options.showCssRects">
                         <div class="css-marker bm-tl" :title="`top-left\n${corners[0]}, ${corners[4]}`"> </div>
                         <div class="css-marker bm-tr" :title="`top-right\n${corners[1]}, ${corners[5]}`"></div>
                         <div class="css-marker bm-br" :title="`bottom-right\n${corners[2]}, ${corners[6]}`"></div>
                         <div class="css-marker bm-bl" :title="`bottom-left\n${corners[3]}, ${corners[7]}`"></div>
-                    </template>
+                    </template> -->
 
                     <template v-if="options.showSvgFrame">
-                        <svg class="svg-marker bm-tl" :style="{fill: options.showSvgRects ? 'rgba(0, 255, 0, .2)' : 'none'}"> <ellipse pathLenght="1" :cx="`100%`" :cy="`100%`" :rx="`100%`" :ry="`100%`"/> </svg>
-                        <svg class="svg-marker bm-tr" :style="{fill: options.showSvgRects ? 'rgba(0, 255, 0, .2)' : 'none'}"> <ellipse pathLenght="1" :cx="`0%`" :cy="`100%`" :rx="`100%`" :ry="`100%`"/> </svg>
-                        <svg class="svg-marker bm-br" :style="{fill: options.showSvgRects ? 'rgba(0, 255, 0, .2)' : 'none'}"> <ellipse pathLenght="1" :cx="`0%`" :cy="`0%`" :rx="`100%`" :ry="`100%`"/> </svg>
-                        <svg class="svg-marker bm-bl" :style="{fill: options.showSvgRects ? 'rgba(0, 255, 0, .2)' : 'none'}"> <ellipse pathLenght="1" :cx="`100%`" :cy="`0%`" :rx="`100%`" :ry="`100%`"/> </svg>
+                        <svg class="svg-marker bm-tl" viewBox="0 0 100 100">
+                            <path :d="`M-0,${woPersent(corners[0])}a${woPersent(corners[0])},${woPersent(corners[4])} 0 1,0 ${woPersent(corners[4])},0Z`" fill="none" stroke="green" pathLength="1"/>
+                        </svg>
+
+                        <!-- 
+                        <svg class="svg-marker bm-tl" :style="{fill: options.showSvgRects ? 'rgba(0, 255, 0, .2)' : 'none'}"> <ellipse :cx="`100%`" :cy="`100%`" :rx="`100%`" :ry="`100%`"/> </svg>
+                        <svg class="svg-marker bm-tr" :style="{fill: options.showSvgRects ? 'rgba(0, 255, 0, .2)' : 'none'}"> <ellipse :cx="`0%`" :cy="`100%`" :rx="`100%`" :ry="`100%`"/> </svg>
+                        <svg class="svg-marker bm-br" :style="{fill: options.showSvgRects ? 'rgba(0, 255, 0, .2)' : 'none'}"> <ellipse :cx="`0%`" :cy="`0%`" :rx="`100%`" :ry="`100%`"/> </svg>
+                        <svg class="svg-marker bm-bl" :style="{fill: options.showSvgRects ? 'rgba(0, 255, 0, .2)' : 'none'}"> <ellipse :cx="`100%`" :cy="`0%`" :rx="`100%`" :ry="`100%`"/> </svg> -->
                     </template>
                 </div>
 
@@ -46,12 +51,6 @@
         <input type="text" :value="generatedTxt" readonly>
 
         <input type="button" value="Generate" @click="onGenerate">
-
-        <svg width="160px" height="160px" viewBox="-40 -40 80 80">
-            <!-- <path d="M-30,0a30,30 0 1,0 60,0a30,30 0 1,0 -60,0" /> -->
-            <!-- <path d="M-20,0a20,40 0 1,0 40,0a20,40 0 1,0 -40,0" /> -->
-            <path d="M-20,0a20,40 0 1,0 40,0Z" fill="none" stroke="green" pathLength="1"/>
-        </svg>
 
         <div class="control-panel">
             <input type="button" class="controls-header" @click="options.showControls = !options.showControls" :value="options.showControls ? 'Hide controls' : 'Show controls'" />
