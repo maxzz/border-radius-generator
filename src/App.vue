@@ -32,7 +32,7 @@
                     </template> -->
 
                     <template v-if="options.showSvgFrame">
-                        <svg class="svg-marker bm-tl" :style="{fill: options.showSvgRects ? 'rgba(0, 255, 0, .2)' : 'none'}"> <ellipse pathLength="4" :cx="`100%`" :cy="`100%`" :rx="`100%`" :ry="`100%`"/> </svg>
+                        <svg class="svg-marker bm-tl" :style="{fill: options.showSvgRects ? 'rgba(0, 255, 0, .2)' : 'none'}"> <ellipse pathLength="4" :cx="`100%`" :cy="`100%`" :rx="`100%`" :ry="`100%`" @transitionend="end"/> </svg>
                         <!-- <svg class="svg-marker bm-tr" :style="{fill: options.showSvgRects ? 'rgba(0, 255, 0, .2)' : 'none'}"> <ellipse pathLength="1" :cx="`0%`" :cy="`100%`" :rx="`100%`" :ry="`100%`"/> </svg>
                         <svg class="svg-marker bm-br" :style="{fill: options.showSvgRects ? 'rgba(0, 255, 0, .2)' : 'none'}"> <ellipse pathLength="1" :cx="`0%`" :cy="`0%`" :rx="`100%`" :ry="`100%`"/> </svg>
                         <svg class="svg-marker bm-bl" :style="{fill: options.showSvgRects ? 'rgba(0, 255, 0, .2)' : 'none'}"> <ellipse pathLength="1" :cx="`100%`" :cy="`0%`" :rx="`100%`" :ry="`100%`"/> </svg> -->
@@ -259,6 +259,10 @@
             }
 
             function onGenerate() {
+                let mk = [...document.querySelectorAll('.svg-marker ellipse')];
+                console.log({mk});
+                mk.forEach((_) => _.style.animatation = 'none');
+
                 generatedCss.value = generateShape(options.symmetrical);
             }
 
@@ -296,6 +300,10 @@
                 return v.replace('%', '');
             }
 
+            function end() {
+                console.log('aa');
+            }
+
             return {
                 options,
                 generatedCss,
@@ -307,6 +315,7 @@
                 onDemoMode,
                 corners,
                 woPersent,
+                end,
             };
         }
     };
@@ -434,7 +443,7 @@
             // fill: rgba(0, 255, 0, .2);
             stroke: green;
             stroke-width: 10;
-            //transition: all 2s;
+            transition: all 2s;
 
             stroke-dashoffset: 1;
             stroke-dasharray: 1;
