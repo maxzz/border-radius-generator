@@ -24,18 +24,18 @@
                         '--h3': corners[7],
                     }"
                 >
-                    <template v-if="options.showCssRects">
+                    <!-- <template v-if="options.showCssRects">
                         <div class="css-marker bm-tl" :title="`top-left\n${corners[0]}, ${corners[4]}`"> </div>
                         <div class="css-marker bm-tr" :title="`top-right\n${corners[1]}, ${corners[5]}`"></div>
                         <div class="css-marker bm-br" :title="`bottom-right\n${corners[2]}, ${corners[6]}`"></div>
                         <div class="css-marker bm-bl" :title="`bottom-left\n${corners[3]}, ${corners[7]}`"></div>
-                    </template>
+                    </template> -->
 
                     <template v-if="options.showSvgFrame">
-                        <svg class="svg-marker bm-tl" :style="{fill: options.showSvgRects ? 'rgba(0, 255, 0, .2)' : 'none'}"> <ellipse :cx="`100%`" :cy="`100%`" :rx="`100%`" :ry="`100%`"/> </svg>
-                        <svg class="svg-marker bm-tr" :style="{fill: options.showSvgRects ? 'rgba(0, 255, 0, .2)' : 'none'}"> <ellipse :cx="`0%`" :cy="`100%`" :rx="`100%`" :ry="`100%`"/> </svg>
-                        <svg class="svg-marker bm-br" :style="{fill: options.showSvgRects ? 'rgba(0, 255, 0, .2)' : 'none'}"> <ellipse :cx="`0%`" :cy="`0%`" :rx="`100%`" :ry="`100%`"/> </svg>
-                        <svg class="svg-marker bm-bl" :style="{fill: options.showSvgRects ? 'rgba(0, 255, 0, .2)' : 'none'}"> <ellipse :cx="`100%`" :cy="`0%`" :rx="`100%`" :ry="`100%`"/> </svg>
+                        <svg class="svg-marker bm-tl" :style="{fill: options.showSvgRects ? 'rgba(0, 255, 0, .2)' : 'none'}"> <ellipse pathLength="4" :cx="`100%`" :cy="`100%`" :rx="`100%`" :ry="`100%`"/> </svg>
+                        <!-- <svg class="svg-marker bm-tr" :style="{fill: options.showSvgRects ? 'rgba(0, 255, 0, .2)' : 'none'}"> <ellipse pathLength="1" :cx="`0%`" :cy="`100%`" :rx="`100%`" :ry="`100%`"/> </svg>
+                        <svg class="svg-marker bm-br" :style="{fill: options.showSvgRects ? 'rgba(0, 255, 0, .2)' : 'none'}"> <ellipse pathLength="1" :cx="`0%`" :cy="`0%`" :rx="`100%`" :ry="`100%`"/> </svg>
+                        <svg class="svg-marker bm-bl" :style="{fill: options.showSvgRects ? 'rgba(0, 255, 0, .2)' : 'none'}"> <ellipse pathLength="1" :cx="`100%`" :cy="`0%`" :rx="`100%`" :ry="`100%`"/> </svg> -->
                     </template>
                 </div>
 
@@ -433,8 +433,21 @@
             // fill: none;
             // fill: rgba(0, 255, 0, .2);
             stroke: green;
-            stroke-width: 1;
+            stroke-width: 10;
             //transition: all 2s;
+
+            stroke-dashoffset: 1;
+            stroke-dasharray: 1;
+            animation: appear 2s forwards;
+
+            @keyframes appear {
+                // from {
+                //     stroke-dashoffset: 1;
+                // }
+                to {
+                    stroke-dashoffset: 0;
+                }
+            }
         }
     }
 
