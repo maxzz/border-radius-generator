@@ -22,6 +22,7 @@
                         '--h1': corners[5],
                         '--h2': corners[6],
                         '--h3': corners[7],
+                        '--dash': dash,
                     }"
                 >
                     <!-- <template v-if="options.showCssRects">
@@ -262,10 +263,14 @@
                 return options.shapes == 1 ? 'red' : paletteTeal[idx % paletteTeal.length];
             }
 
+            const dash = ref(0);
+
             function onGenerate() {
                 let mk = [...document.querySelectorAll('.svg-marker ellipse')];
                 console.log({mk});
-                mk.forEach((_) => _.style.animatation = 'none');
+                //mk.forEach((_) => _.style.animatation = 'none');
+
+                dash.value = 2;
 
                 generatedCss.value = generateShape(options.symmetrical);
             }
@@ -305,6 +310,7 @@
             }
 
             function end() {
+                dash.value = 1;
                 console.log('aa2');
             }
 
@@ -320,6 +326,7 @@
                 corners,
                 woPersent,
                 end,
+                dash,
             };
         }
     };
@@ -450,6 +457,7 @@
             //transition: all 2s;
 
             //stroke-dashoffset: 3;
+            stroke-dashoffset: var(--dash);
             stroke-dasharray: 4;
             animation: appear 2s;
 
@@ -458,10 +466,10 @@
 
             @keyframes appear {
                 from {
-                    stroke-dashoffset: 4;
+                    stroke-dashoffset: 2;
                 }
                 to {
-                    stroke-dashoffset: 0;
+                    stroke-dashoffset: 1;
                 }
             }
         }
