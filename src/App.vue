@@ -32,11 +32,15 @@
                     </template> -->
 
                     <template v-if="options.showSvgFrame">
-                        <svg class="svg-marker bm-tl" :style="{fill: options.showSvgRects ? 'rgba(0, 255, 0, .2)' : 'none'}"> <ellipse pathLength="4" :cx="`100%`" :cy="`100%`" :rx="`100%`" :ry="`100%`" @transitionend="end"/> </svg>
-                        <!-- <svg class="svg-marker bm-tr" :style="{fill: options.showSvgRects ? 'rgba(0, 255, 0, .2)' : 'none'}"> <ellipse pathLength="1" :cx="`0%`" :cy="`100%`" :rx="`100%`" :ry="`100%`"/> </svg>
-                        <svg class="svg-marker bm-br" :style="{fill: options.showSvgRects ? 'rgba(0, 255, 0, .2)' : 'none'}"> <ellipse pathLength="1" :cx="`0%`" :cy="`0%`" :rx="`100%`" :ry="`100%`"/> </svg>
-                        <svg class="svg-marker bm-bl" :style="{fill: options.showSvgRects ? 'rgba(0, 255, 0, .2)' : 'none'}"> <ellipse pathLength="1" :cx="`100%`" :cy="`0%`" :rx="`100%`" :ry="`100%`"/> </svg> -->
+                        <svg class="svg-marker bm-tl" :style="{fill: options.showSvgRects ? 'rgba(0, 255, 0, .2)' : 'none'}"> <ellipse pathLength="4" :cx="`30%`" :cy="`30%`" :rx="`30%`" :ry="`30%`" @animationend="end"/> </svg>
                     </template>
+
+                    <!-- <template v-if="options.showSvgFrame">
+                        <svg class="svg-marker bm-tl" :style="{fill: options.showSvgRects ? 'rgba(0, 255, 0, .2)' : 'none'}"> <ellipse pathLength="4" :cx="`100%`" :cy="`100%`" :rx="`100%`" :ry="`100%`"/> </svg>
+                        <svg class="svg-marker bm-tr" :style="{fill: options.showSvgRects ? 'rgba(0, 255, 0, .2)' : 'none'}"> <ellipse pathLength="4" :cx="`0%`" :cy="`100%`" :rx="`100%`" :ry="`100%`"/> </svg>
+                        <svg class="svg-marker bm-br" :style="{fill: options.showSvgRects ? 'rgba(0, 255, 0, .2)' : 'none'}"> <ellipse pathLength="4" :cx="`0%`" :cy="`0%`" :rx="`100%`" :ry="`100%`"/> </svg>
+                        <svg class="svg-marker bm-bl" :style="{fill: options.showSvgRects ? 'rgba(0, 255, 0, .2)' : 'none'}"> <ellipse pathLength="4" :cx="`100%`" :cy="`0%`" :rx="`100%`" :ry="`100%`"/> </svg>
+                    </template> -->
                 </div>
 
                 <span v-if="options.showBorder">{{item}}</span>
@@ -301,7 +305,7 @@
             }
 
             function end() {
-                console.log('aa');
+                console.log('aa2');
             }
 
             return {
@@ -442,17 +446,20 @@
             // fill: none;
             // fill: rgba(0, 255, 0, .2);
             stroke: green;
-            stroke-width: 10;
-            transition: all 2s;
+            stroke-width: 5;
+            //transition: all 2s;
 
-            stroke-dashoffset: 1;
-            stroke-dasharray: 1;
-            animation: appear 2s forwards;
+            //stroke-dashoffset: 3;
+            stroke-dasharray: 4;
+            animation: appear 2s;
+
+            // --anim: 'animation: appear 2s forwards';
+            // animation: var(--anim);
 
             @keyframes appear {
-                // from {
-                //     stroke-dashoffset: 1;
-                // }
+                from {
+                    stroke-dashoffset: 4;
+                }
                 to {
                     stroke-dashoffset: 0;
                 }
