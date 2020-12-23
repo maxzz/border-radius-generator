@@ -8,11 +8,10 @@
                 :style="{
                     borderRadius: generatedCss,
                     transform: getBubbaTransform(item),
-                    backgroundColor: 'seashell',
+                    backgroundColor: getBubbaBackground(item),
                     outline: options.showCssRects ? '1px dashed green' : 'none'
                 }"
             >
-                <!-- backgroundColor: getBubbaBackground(item), -->
                 <div class="markers" v-if="!options.showOnlyOneRect || item === Number(options.shapes)"
                     :style="{
                         '--w0': corners[0],
@@ -23,33 +22,20 @@
                         '--h1': corners[5],
                         '--h2': corners[6],
                         '--h3': corners[7],
-                        '--real': 'calc(var(--w0) + 1px)',
                     }"
                 >
-                    <!-- <template v-if="options.showCssRects">
+                    <template v-if="options.showCssRects">
                         <div class="css-marker bm-tl" :title="`top-left\n${corners[0]}, ${corners[4]}`"> </div>
                         <div class="css-marker bm-tr" :title="`top-right\n${corners[1]}, ${corners[5]}`"></div>
                         <div class="css-marker bm-br" :title="`bottom-right\n${corners[2]}, ${corners[6]}`"></div>
                         <div class="css-marker bm-bl" :title="`bottom-left\n${corners[3]}, ${corners[7]}`"></div>
-                    </template> -->
+                    </template>
 
                     <template v-if="options.showSvgFrame">
-                        <div class="svg-marker bm-tl">
-                            <svg class="ttt" viewBox='0 0 100 100' preserveAspectRatio="none">
-                                <!-- Now in here, a coordinate (25,50) corresponds to (25%,50%) of the outer viewport. -->
-                                <path d="M0,0 L100,0 L100,100 L0,0" fill="none" stroke="blue" vector-effect="non-scaling-stroke"/>
-                                
-                                <path d="M50,50 A20,20 0 1 0 51,50 " fill="none" stroke="blue" vector-effect="non-scaling-stroke"/>
-
-                                <path d="M0,100 A20,10 0 0 0 100,100 " fill="red" stroke="pink" vector-effect="non-scaling-stroke"/>
-                            </svg>
-                        </div>
-
-                        <!-- 
                         <svg class="svg-marker bm-tl" :style="{fill: options.showSvgRects ? 'rgba(0, 255, 0, .2)' : 'none'}"> <ellipse :cx="`100%`" :cy="`100%`" :rx="`100%`" :ry="`100%`"/> </svg>
                         <svg class="svg-marker bm-tr" :style="{fill: options.showSvgRects ? 'rgba(0, 255, 0, .2)' : 'none'}"> <ellipse :cx="`0%`" :cy="`100%`" :rx="`100%`" :ry="`100%`"/> </svg>
                         <svg class="svg-marker bm-br" :style="{fill: options.showSvgRects ? 'rgba(0, 255, 0, .2)' : 'none'}"> <ellipse :cx="`0%`" :cy="`0%`" :rx="`100%`" :ry="`100%`"/> </svg>
-                        <svg class="svg-marker bm-bl" :style="{fill: options.showSvgRects ? 'rgba(0, 255, 0, .2)' : 'none'}"> <ellipse :cx="`100%`" :cy="`0%`" :rx="`100%`" :ry="`100%`"/> </svg> -->
+                        <svg class="svg-marker bm-bl" :style="{fill: options.showSvgRects ? 'rgba(0, 255, 0, .2)' : 'none'}"> <ellipse :cx="`100%`" :cy="`0%`" :rx="`100%`" :ry="`100%`"/> </svg>
                     </template>
                 </div>
 
@@ -345,11 +331,6 @@
         display: grid;
         justify-content: center;
         background-color: #f9f9f9;
-    }
-
-    .ttt {
-        width: var(--real);
-        height: var(--real);
     }
 
     main {
