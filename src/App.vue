@@ -32,7 +32,7 @@
                         <div class="css-marker bm-bl" :title="`bottom-left\n${corners[3]}, ${corners[7]}`"></div>
                     </template> -->
 
-                    <template v-if="options.showSvgFrame">
+                    <template v-if="options.showSvgFrame && dash === 2">
                         <svg class="svg-marker bm-tl" :style="{fill: options.showSvgRects ? 'rgba(0, 255, 0, .2)' : 'none'}"> <ellipse pathLength="4" :cx="`30%`" :cy="`30%`" :rx="`30%`" :ry="`30%`" @animationend="end"/> </svg>
                     </template>
 
