@@ -25,27 +25,25 @@
                         '--dash': dash,
                     }"
                 >
-                    <!-- <template v-if="options.showCssRects">
+                    <template v-if="options.showCssRects">
                         <div class="css-marker bm-tl" :title="`top-left\n${corners[0]}, ${corners[4]}`"> </div>
                         <div class="css-marker bm-tr" :title="`top-right\n${corners[1]}, ${corners[5]}`"></div>
                         <div class="css-marker bm-br" :title="`bottom-right\n${corners[2]}, ${corners[6]}`"></div>
                         <div class="css-marker bm-bl" :title="`bottom-left\n${corners[3]}, ${corners[7]}`"></div>
-                    </template> -->
+                    </template>
 
                     <template v-if="options.showSvgFrame && dash === 1 ">
                         <svg class="ani-marker bm-tl" :style="{'--seg-b': 2, '--seg-e': 1, '--delay': '0s'}"> <ellipse pathLength="4" :cx="`100%`" :cy="`100%`" :rx="`100%`" :ry="`100%`"/> </svg>
                         <svg class="ani-marker bm-tr" :style="{'--seg-b': 1, '--seg-e': 0, '--delay': '.5s'}"> <ellipse pathLength="4" :cx="`0%`" :cy="`100%`" :rx="`100%`" :ry="`100%`"/> </svg>
                         <svg class="ani-marker bm-br" :style="{'--seg-b': 4, '--seg-e': 3, '--delay': '1s'}"> <ellipse pathLength="4" :cx="`0%`" :cy="`0%`" :rx="`100%`" :ry="`100%`"/> </svg>
-                        <svg class="ani-marker bm-bl" :style="{'--seg-b': 3, '--seg-e': 2, '--delay': '1.5s'}"> <ellipse pathLength="4" :cx="`100%`" :cy="`0%`" :rx="`100%`" :ry="`100%`" @animationend="end"/> </svg>
+                        <svg class="ani-marker bm-bl" :style="{'--seg-b': 3, '--seg-e': 2, '--delay': '1.5s'}"> <ellipse pathLength="4" :cx="`100%`" :cy="`0%`" :rx="`100%`" :ry="`100%`" @animationend="dash = 0"/> </svg>
                     </template>
 
                     <template v-if="options.showSvgFrame">
-                        <!--                         
                         <svg class="svg-marker bm-tl" :style="{fill: options.showSvgRects ? 'rgba(0, 255, 0, .2)' : 'none'}"> <ellipse pathLength="4" :cx="`100%`" :cy="`100%`" :rx="`100%`" :ry="`100%`"/> </svg>
                         <svg class="svg-marker bm-tr" :style="{fill: options.showSvgRects ? 'rgba(0, 255, 0, .2)' : 'none'}"> <ellipse pathLength="4" :cx="`0%`" :cy="`100%`" :rx="`100%`" :ry="`100%`"/> </svg>
                         <svg class="svg-marker bm-br" :style="{fill: options.showSvgRects ? 'rgba(0, 255, 0, .2)' : 'none'}"> <ellipse pathLength="4" :cx="`0%`" :cy="`0%`" :rx="`100%`" :ry="`100%`"/> </svg>
                         <svg class="svg-marker bm-bl" :style="{fill: options.showSvgRects ? 'rgba(0, 255, 0, .2)' : 'none'}"> <ellipse pathLength="4" :cx="`100%`" :cy="`0%`" :rx="`100%`" :ry="`100%`"/> </svg>
-                         -->
                     </template>
                 </div>
 
@@ -127,9 +125,6 @@
 <style lang="scss">
     .ani-marker {
         position: absolute;
-        outline: 1px dashed yellowgreen;
-
-        $marker-opacity: .6;
 
         & ellipse {
             fill: transparent;
@@ -138,7 +133,7 @@
 
             stroke-dashoffset: 0;
             stroke-dasharray: 4;
-            animation: 3s enter-ani-marker;
+            animation: 1s enter-ani-marker;
             animation-delay: var(--delay);
         }
     }
@@ -147,18 +142,21 @@
         from {
             stroke-dashoffset: var(--seg-b);
             opacity: 0;
-            stroke-width: 15;
+            stroke-width: 1;
         }
         50% {
             opacity: 1;
             stroke-dashoffset: var(--seg-e);
+            stroke-width: 10;
         }
         70% {
-            //stroke: rgba(139, 0, 139, 0);
+            opacity: 0;
+            stroke-width: 1;
+        }
+        100% {
             opacity: 0;
         }
     }
-
 </style>
 
 <script>
@@ -221,10 +219,10 @@
         '#00796b',
         '#00695c',
         '#004d40',
-        '#a7ffeb',
-        '#64ffda',
-        '#1de9b6',
-        '#00bfa5',
+        // '#a7ffeb',
+        // '#64ffda',
+        // '#1de9b6',
+        // '#00bfa5',
     ];
 
     export default {
@@ -298,11 +296,8 @@
 
             function getBubbaBackground(num) {
                 let idx = num - 1;
-                if (options.shapes == 1) {
-                    return 'red';
-                }
-
-                return options.shapes == 1 ? 'red' : paletteTeal[idx % paletteTeal.length];
+                //return options.shapes == 1 ? paletteTeal[9] : paletteTeal[paletteTeal.length - 1 - idx % paletteTeal.length];
+                return options.shapes == 1 ? paletteTeal[0] : paletteTeal[idx % paletteTeal.length];
             }
 
             const dash = ref(0);
