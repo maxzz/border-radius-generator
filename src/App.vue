@@ -316,7 +316,7 @@
                 }
             }
 
-            let currentOptions = defaultOptions;
+            let currentOptions: any = defaultOptions;
 
             function onDemoMode(event) {
                 if (options.demoMode) {
