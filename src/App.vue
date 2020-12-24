@@ -22,7 +22,6 @@
                         '--h1': corners[5],
                         '--h2': corners[6],
                         '--h3': corners[7],
-                        '--dash': dash,
                     }"
                 >
                     <template v-if="options.showCssRects">
@@ -39,11 +38,11 @@
                         <svg class="svg-marker bm-bl" :style="{fill: options.showSvgRects ? 'rgba(0, 255, 0, .2)' : 'none'}"> <ellipse pathLength="4" :cx="`100%`" :cy="`0%`" :rx="`100%`" :ry="`100%`"/> </svg>
                     </template>
 
-                    <template v-if="options.showSvgFrame && dash ">
+                    <template v-if="options.showSvgFrame && animateStokes ">
                         <svg class="ani-marker bm-tl" :style="{'--seg-b': 2, '--seg-e': 1, '--delay': '0s'}"> <ellipse pathLength="4" :cx="`100%`" :cy="`100%`" :rx="`100%`" :ry="`100%`"/> </svg>
                         <svg class="ani-marker bm-tr" :style="{'--seg-b': 1, '--seg-e': 0, '--delay': '.5s'}"> <ellipse pathLength="4" :cx="`0%`" :cy="`100%`" :rx="`100%`" :ry="`100%`"/> </svg>
                         <svg class="ani-marker bm-br" :style="{'--seg-b': 4, '--seg-e': 3, '--delay': '1s'}"> <ellipse pathLength="4" :cx="`0%`" :cy="`0%`" :rx="`100%`" :ry="`100%`"/> </svg>
-                        <svg class="ani-marker bm-bl" :style="{'--seg-b': 3, '--seg-e': 2, '--delay': '1.5s'}"> <ellipse pathLength="4" :cx="`100%`" :cy="`0%`" :rx="`100%`" :ry="`100%`" @animationend="dash = false"/> </svg>
+                        <svg class="ani-marker bm-bl" :style="{'--seg-b': 3, '--seg-e': 2, '--delay': '1.5s'}"> <ellipse pathLength="4" :cx="`100%`" :cy="`0%`" :rx="`100%`" :ry="`100%`" @animationend="animateStokes = false"/> </svg>
                     </template>
                 </div>
 
@@ -312,15 +311,15 @@
                 return options.shapes == 1 ? paletteTeal[0] : paletteTeal[idx % paletteTeal.length];
             }
 
-            const dash = ref(false);
+            const animateStokes = ref(false);
 
             function onGenerate() {
                 let mk = [...document.querySelectorAll('.svg-marker ellipse')];
                 console.log({mk});
                 //mk.forEach((_) => _.style.animatation = 'none');
 
-                dash.value = false; // cancel prev animation
-                nextTick(() => dash.value = true);
+                animateStokes.value = false; // cancel prev animation
+                nextTick(() => animateStokes.value = true);
 
                 generatedCss.value = generateShape(options.symmetrical);
             }
@@ -368,7 +367,7 @@
                 onDemoMode,
                 corners,
                 woPersent,
-                dash,
+                animateStokes,
             };
         }
     };
@@ -494,15 +493,6 @@
             stroke: green;
             stroke-width: .5;
             //transition: all 2s;
-
-            //stroke-dashoffset: 3;
-            // stroke-dashoffset: var(--dash);
-            // stroke-dasharray: 4;
-            //animation: enter-ani-marker 2s;
-
-            // --anim: 'animation: enter-ani-marker 2s forwards';
-            // animation: var(--anim);
-
         }
     }
 
