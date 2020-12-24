@@ -142,7 +142,7 @@
     }
 </style>
 
-<script>
+<script lang="ts">
     import { computed, nextTick, reactive, ref, toRaw } from 'vue';
 
     //#region local utils
@@ -193,7 +193,7 @@
         return `${wTL}% ${wTR}% ${wBR}% ${wBL}% / ${hTL}% ${hTR}% ${hBR}% ${hBL}%`;
     }
 
-    const paletteTeal = [
+    const paletteTeal: string[] = [
         '#e0f2f1',
         '#b2dfdb',
         '#80cbc4',
@@ -214,7 +214,7 @@
         shiftX: 20,
         shiftY: 20,
         symmetrical: true,
-        showRects: 0,
+        showRects: 0, // 0 - none; 1 - CSS; 2 - SVG
         showCssRects: true,
         showSvgRects: true,
         showBorder: true,
