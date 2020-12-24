@@ -83,7 +83,16 @@
 
                 <fieldset>
                     <legend>Show options</legend>
-    
+
+                    <div class="control-row" style="justify-content: start">
+                        Show corners:
+                        <div class="show-corners">
+                            <label>None<input type="radio" value="0" name="showCorners" v-model="options.showRects"></label>
+                            <label>CSS <input type="radio" value="1" name="showCorners" v-model="options.showRects"></label>
+                            <label>SVG <input type="radio" value="2" name="showCorners" v-model="options.showRects"></label>
+                        </div>
+                    </div>
+
                     <div class="control-row">
                         <label>Show CSS corner rectangles<input type="checkbox" v-model="options.showCssRects"></label>
                     </div>
@@ -123,38 +132,12 @@
 </template>
 
 <style lang="scss">
-    .ani-marker {
-        position: absolute;
+    .show-corners {
+        display: flex;
+        justify-content: space-between;
 
-        & ellipse {
-            fill: transparent;
-            stroke: darkmagenta;
-            stroke-width: 0;
-
-            stroke-dashoffset: 0;
-            stroke-dasharray: 4;
-            animation: 1s enter-ani-marker;
-            animation-delay: var(--delay);
-        }
-    }
-
-    @keyframes enter-ani-marker {
-        from {
-            stroke-dashoffset: var(--seg-b);
-            opacity: 0;
-            stroke-width: 1;
-        }
-        50% {
-            opacity: 1;
-            stroke-dashoffset: var(--seg-e);
-            stroke-width: 10;
-        }
-        70% {
-            opacity: 0;
-            stroke-width: 1;
-        }
-        100% {
-            opacity: 0;
+        & > label {
+            margin: 0 1em;
         }
     }
 </style>
@@ -219,10 +202,6 @@
         '#00796b',
         '#00695c',
         '#004d40',
-        // '#a7ffeb',
-        // '#64ffda',
-        // '#1de9b6',
-        // '#00bfa5',
     ];
 
     export default {
@@ -238,6 +217,7 @@
                 shiftX: 20,
                 shiftY: 20,
                 symmetrical: true,
+                showRects: 0,
                 showCssRects: true,
                 showSvgRects: true,
                 showBorder: true,
@@ -255,6 +235,7 @@
                 shiftX: 9,
                 shiftY: 7,
                 symmetrical: true,
+                showRects: 0,
                 showCssRects: true,
                 showSvgRects: true,
                 showBorder: true,
@@ -272,6 +253,7 @@
             //     shiftX: 20,
             //     shiftY: 6,
             //     symmetrical: true,
+            //     showRects: 0,
             //     showCssRects: false,
             //     showSvgRects: true,
             //     showBorder: true,
@@ -296,7 +278,6 @@
 
             function getBubbaBackground(num) {
                 let idx = num - 1;
-                //return options.shapes == 1 ? paletteTeal[9] : paletteTeal[paletteTeal.length - 1 - idx % paletteTeal.length];
                 return options.shapes == 1 ? paletteTeal[0] : paletteTeal[idx % paletteTeal.length];
             }
 
@@ -586,6 +567,43 @@
 
         &:hover .legend {
             display: grid;
+        }
+    }
+</style>
+
+<style lang="scss">
+    .ani-marker {
+        position: absolute;
+
+        & ellipse {
+            fill: transparent;
+            stroke: darkmagenta;
+            stroke-width: 0;
+
+            stroke-dashoffset: 0;
+            stroke-dasharray: 4;
+            animation: 1s enter-ani-marker;
+            animation-delay: var(--delay);
+        }
+    }
+
+    @keyframes enter-ani-marker {
+        from {
+            stroke-dashoffset: var(--seg-b);
+            opacity: 0;
+            stroke-width: 1;
+        }
+        50% {
+            opacity: 1;
+            stroke-dashoffset: var(--seg-e);
+            stroke-width: 10;
+        }
+        70% {
+            opacity: 0;
+            stroke-width: 1;
+        }
+        100% {
+            opacity: 0;
         }
     }
 </style>
