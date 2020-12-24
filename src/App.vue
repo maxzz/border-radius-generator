@@ -24,21 +24,23 @@
                         '--h3': corners[7],
                     }"
                 >
-                    <template v-if="options.showCssRects">
+                    <template v-if="optionsShowRect.showCssRects">
                         <div class="css-marker bm-tl" :title="`top-left\n${corners[0]}, ${corners[4]}`"> </div>
                         <div class="css-marker bm-tr" :title="`top-right\n${corners[1]}, ${corners[5]}`"></div>
                         <div class="css-marker bm-br" :title="`bottom-right\n${corners[2]}, ${corners[6]}`"></div>
                         <div class="css-marker bm-bl" :title="`bottom-left\n${corners[3]}, ${corners[7]}`"></div>
                     </template>
 
-                    <template v-if="options.showSvgFrame">
+                    <template v-if="optionsShowRect.showSvgRects">
+                        <!-- options.showSvgFrame -->
                         <svg class="svg-marker bm-tl" :style="{fill: options.showSvgRects ? 'rgba(0, 255, 0, .2)' : 'none'}"> <ellipse pathLength="4" :cx="`100%`" :cy="`100%`" :rx="`100%`" :ry="`100%`"/> </svg>
                         <svg class="svg-marker bm-tr" :style="{fill: options.showSvgRects ? 'rgba(0, 255, 0, .2)' : 'none'}"> <ellipse pathLength="4" :cx="`0%`" :cy="`100%`" :rx="`100%`" :ry="`100%`"/> </svg>
                         <svg class="svg-marker bm-br" :style="{fill: options.showSvgRects ? 'rgba(0, 255, 0, .2)' : 'none'}"> <ellipse pathLength="4" :cx="`0%`" :cy="`0%`" :rx="`100%`" :ry="`100%`"/> </svg>
                         <svg class="svg-marker bm-bl" :style="{fill: options.showSvgRects ? 'rgba(0, 255, 0, .2)' : 'none'}"> <ellipse pathLength="4" :cx="`100%`" :cy="`0%`" :rx="`100%`" :ry="`100%`"/> </svg>
                     </template>
 
-                    <template v-if="options.showSvgFrame && animateStokes ">
+                    <template v-if="optionsShowRect.showSvgRects && animateStokes ">
+                        <!-- options.showSvgFrame -->
                         <svg class="ani-marker bm-tl" :style="{'--seg-b': 2, '--seg-e': 1, '--delay': '0s'}"> <ellipse pathLength="4" :cx="`100%`" :cy="`100%`" :rx="`100%`" :ry="`100%`"/> </svg>
                         <svg class="ani-marker bm-tr" :style="{'--seg-b': 1, '--seg-e': 0, '--delay': '.5s'}"> <ellipse pathLength="4" :cx="`0%`" :cy="`100%`" :rx="`100%`" :ry="`100%`"/> </svg>
                         <svg class="ani-marker bm-br" :style="{'--seg-b': 4, '--seg-e': 3, '--delay': '1s'}"> <ellipse pathLength="4" :cx="`0%`" :cy="`0%`" :rx="`100%`" :ry="`100%`"/> </svg>
@@ -85,14 +87,14 @@
 
                     <div class="control-row" style="justify-content: start">
                         Show corners:
-                        <div class="show-corners">
+                        <div class="row-show-corners">
                             <label>None<input type="radio" value="0" name="showCorners" v-model="options.showRects"></label>
                             <label>CSS <input type="radio" value="1" name="showCorners" v-model="options.showRects"></label>
                             <label>SVG <input type="radio" value="2" name="showCorners" v-model="options.showRects"></label>
                         </div>
                     </div>
 
-                    <div class="control-row">
+                    <!-- <div class="control-row">
                         <label>Show CSS corner rectangles<input type="checkbox" v-model="options.showCssRects"></label>
                     </div>
     
@@ -102,7 +104,7 @@
     
                     <div class="control-row">
                         <label>Show SVG frame<input type="checkbox" v-model="options.showSvgFrame"></label>
-                    </div>
+                    </div> -->
 
                     <div class="control-row">
                         <label>Show corners only on the last rectangle<input type="checkbox" v-model="options.showOnlyOneRect"></label>
@@ -126,12 +128,11 @@
                 </div>
             </template>
         </div>
-
     </main>
 </template>
 
 <style lang="scss">
-    .show-corners {
+    .row-show-corners {
         display: flex;
         justify-content: space-between;
 
@@ -295,6 +296,11 @@
 
             let options: Options = reactive(defaultOptions);
 
+            let optionsShowRect = reactive({
+                showCssRects: computed(() => options.showRects == ShowRects.css),
+                showSvgRects: computed(() => options.showRects == ShowRects.svg),
+            });
+
             options.demoMode && (options = reactive(demoOptions));
 
             function getItemCss(num) {
@@ -313,15 +319,14 @@
 
             const animateStokes = ref(false);
 
-            function onGenerate() {
-                let mk = [...document.querySelectorAll('.svg-marker ellipse')];
-                console.log({mk});
-                //mk.forEach((_) => _.style.animatation = 'none');
-
-                animateStokes.value = false; // cancel prev animation
+            function showAnimatedStrokes() {
+                animateStokes.value = false; // this is to cancel prev animation
                 nextTick(() => animateStokes.value = true);
+            }
 
+            function onGenerate() {
                 generatedCss.value = generateShape(options.symmetrical);
+                showAnimatedStrokes();
             }
 
             let corners = computed(() => generateCorners(generatedCss.value));
@@ -332,7 +337,8 @@
                     if (timerID) {
                         clearInterval(timerID);
                     }
-                    timerID = setInterval(onGenerate, 1500); // This shoild be more then transion on .bubba
+                    onGenerate();
+                    timerID = setInterval(onGenerate, 2200); // This shoild be more then transion on .bubba
                 } else {
                     if (timerID) {
                         clearInterval(timerID);
@@ -358,6 +364,7 @@
 
             return {
                 options,
+                optionsShowRect,
                 generatedCss,
                 generatedTxt,
                 getBubbaTransform,
