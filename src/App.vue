@@ -137,13 +137,15 @@
         justify-content: space-between;
 
         & > label {
-            margin: 0 1em;
+            margin: 0 .8em;
         }
     }
 </style>
 
 <script>
     import { computed, nextTick, reactive, ref, toRaw } from 'vue';
+
+    //#region local utils
 
     function assignToReactive(toObj, fromObj) {
         for (const [k, v] of Object.entries(fromObj)) {
@@ -204,64 +206,66 @@
         '#004d40',
     ];
 
+    const defaultOptions = {
+        showControls: true,
+        shapes: 1,
+        borderWidth: 1,
+        scale: .1,
+        shiftX: 20,
+        shiftY: 20,
+        symmetrical: true,
+        showRects: 0,
+        showCssRects: true,
+        showSvgRects: true,
+        showBorder: true,
+        showSvgFrame: true,
+        showOnlyOneRect: true,
+        animate: false,
+        demoMode: false,
+    };
+
+    const demoOptions = {
+        showControls: true,
+        shapes: 10,
+        borderWidth: 1,
+        scale: .1, // scale: .0043,
+        shiftX: 9,
+        shiftY: 7,
+        symmetrical: true,
+        showRects: 0,
+        showCssRects: true,
+        showSvgRects: true,
+        showBorder: true,
+        showSvgFrame: true,
+        showOnlyOneRect: false,
+        animate: true,
+        demoMode: true,
+    };
+
+    // const demoOptions2 = {
+    //     showControls: true,
+    //     shapes: 18,
+    //     borderWidth: 1,
+    //     scale: .0947,
+    //     shiftX: 20,
+    //     shiftY: 6,
+    //     symmetrical: true,
+    //     showRects: 0,
+    //     showCssRects: false,
+    //     showSvgRects: true,
+    //     showBorder: true,
+    //     showSvgFrame: true,
+    //     showOnlyOneRect: true,
+    //     animate: true,
+    //     demoMode: true,
+    // };
+
+    //#endregion local utils
+
     export default {
         setup() {
             const generatedCss = ref('23% 77% 82% 18% / 59% 21% 79% 41%'); // ref(generateShape(true)); // TODO: allow edit: '10% 90% 28% 72% / 20% 58% 42% 80%'
             const generatedTxt = computed(() => generatedCss.value ? `border-radius: ${generatedCss.value}` : '');
-
-            const defaultOptions = {
-                showControls: true,
-                shapes: 1,
-                borderWidth: 1,
-                scale: .1,
-                shiftX: 20,
-                shiftY: 20,
-                symmetrical: true,
-                showRects: 0,
-                showCssRects: true,
-                showSvgRects: true,
-                showBorder: true,
-                showSvgFrame: true,
-                showOnlyOneRect: true,
-                animate: false,
-                demoMode: false,
-            };
-
-            const demoOptions = {
-                showControls: true,
-                shapes: 10,
-                borderWidth: 1,
-                scale: .1, // scale: .0043,
-                shiftX: 9,
-                shiftY: 7,
-                symmetrical: true,
-                showRects: 0,
-                showCssRects: true,
-                showSvgRects: true,
-                showBorder: true,
-                showSvgFrame: true,
-                showOnlyOneRect: false,
-                animate: true,
-                demoMode: true,
-            };
-
-            // const demoOptions2 = {
-            //     showControls: true,
-            //     shapes: 18,
-            //     borderWidth: 1,
-            //     scale: .0947,
-            //     shiftX: 20,
-            //     shiftY: 6,
-            //     symmetrical: true,
-            //     showRects: 0,
-            //     showCssRects: false,
-            //     showSvgRects: true,
-            //     showBorder: true,
-            //     showSvgFrame: true,
-            //     showOnlyOneRect: true,
-            //     animate: true,
-            //     demoMode: true,
-            // };
 
             let options = reactive(defaultOptions);
 
