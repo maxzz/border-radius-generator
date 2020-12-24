@@ -32,18 +32,18 @@
                         <div class="css-marker bm-bl" :title="`bottom-left\n${corners[3]}, ${corners[7]}`"></div>
                     </template>
 
-                    <template v-if="options.showSvgFrame && dash === 1 ">
-                        <svg class="ani-marker bm-tl" :style="{'--seg-b': 2, '--seg-e': 1, '--delay': '0s'}"> <ellipse pathLength="4" :cx="`100%`" :cy="`100%`" :rx="`100%`" :ry="`100%`"/> </svg>
-                        <svg class="ani-marker bm-tr" :style="{'--seg-b': 1, '--seg-e': 0, '--delay': '.5s'}"> <ellipse pathLength="4" :cx="`0%`" :cy="`100%`" :rx="`100%`" :ry="`100%`"/> </svg>
-                        <svg class="ani-marker bm-br" :style="{'--seg-b': 4, '--seg-e': 3, '--delay': '1s'}"> <ellipse pathLength="4" :cx="`0%`" :cy="`0%`" :rx="`100%`" :ry="`100%`"/> </svg>
-                        <svg class="ani-marker bm-bl" :style="{'--seg-b': 3, '--seg-e': 2, '--delay': '1.5s'}"> <ellipse pathLength="4" :cx="`100%`" :cy="`0%`" :rx="`100%`" :ry="`100%`" @animationend="dash = 0"/> </svg>
-                    </template>
-
                     <template v-if="options.showSvgFrame">
                         <svg class="svg-marker bm-tl" :style="{fill: options.showSvgRects ? 'rgba(0, 255, 0, .2)' : 'none'}"> <ellipse pathLength="4" :cx="`100%`" :cy="`100%`" :rx="`100%`" :ry="`100%`"/> </svg>
                         <svg class="svg-marker bm-tr" :style="{fill: options.showSvgRects ? 'rgba(0, 255, 0, .2)' : 'none'}"> <ellipse pathLength="4" :cx="`0%`" :cy="`100%`" :rx="`100%`" :ry="`100%`"/> </svg>
                         <svg class="svg-marker bm-br" :style="{fill: options.showSvgRects ? 'rgba(0, 255, 0, .2)' : 'none'}"> <ellipse pathLength="4" :cx="`0%`" :cy="`0%`" :rx="`100%`" :ry="`100%`"/> </svg>
                         <svg class="svg-marker bm-bl" :style="{fill: options.showSvgRects ? 'rgba(0, 255, 0, .2)' : 'none'}"> <ellipse pathLength="4" :cx="`100%`" :cy="`0%`" :rx="`100%`" :ry="`100%`"/> </svg>
+                    </template>
+
+                    <template v-if="options.showSvgFrame && dash ">
+                        <svg class="ani-marker bm-tl" :style="{'--seg-b': 2, '--seg-e': 1, '--delay': '0s'}"> <ellipse pathLength="4" :cx="`100%`" :cy="`100%`" :rx="`100%`" :ry="`100%`"/> </svg>
+                        <svg class="ani-marker bm-tr" :style="{'--seg-b': 1, '--seg-e': 0, '--delay': '.5s'}"> <ellipse pathLength="4" :cx="`0%`" :cy="`100%`" :rx="`100%`" :ry="`100%`"/> </svg>
+                        <svg class="ani-marker bm-br" :style="{'--seg-b': 4, '--seg-e': 3, '--delay': '1s'}"> <ellipse pathLength="4" :cx="`0%`" :cy="`0%`" :rx="`100%`" :ry="`100%`"/> </svg>
+                        <svg class="ani-marker bm-bl" :style="{'--seg-b': 3, '--seg-e': 2, '--delay': '1.5s'}"> <ellipse pathLength="4" :cx="`100%`" :cy="`0%`" :rx="`100%`" :ry="`100%`" @animationend="dash = false"/> </svg>
                     </template>
                 </div>
 
@@ -145,6 +145,87 @@
 <script lang="ts">
     import { computed, nextTick, reactive, ref, toRaw } from 'vue';
 
+    //#region types
+    const enum ShowRects {
+        none,
+        css,
+        svg
+    }
+
+    type Options = {
+        showControls: boolean;
+        shapes: number,
+        borderWidth: number,
+        scale: number,
+        shiftX: number,
+        shiftY: number,
+        symmetrical: boolean;
+        showRects: ShowRects, // 0 - none; 1 - CSS; 2 - SVG
+        showCssRects: boolean;
+        showSvgRects: boolean;
+        showBorder: boolean;
+        showSvgFrame: boolean;
+        showOnlyOneRect: boolean;
+        animate: boolean,
+        demoMode: boolean,
+    };
+
+    const defaultOptions: Options = {
+        showControls: true,
+        shapes: 1,
+        borderWidth: 1,
+        scale: .1,
+        shiftX: 20,
+        shiftY: 20,
+        symmetrical: true,
+        showRects: 0, // 0 - none; 1 - CSS; 2 - SVG
+        showCssRects: true,
+        showSvgRects: true,
+        showBorder: true,
+        showSvgFrame: true,
+        showOnlyOneRect: true,
+        animate: false,
+        demoMode: false,
+    };
+
+    const demoOptions: Options = {
+        showControls: true,
+        shapes: 10,
+        borderWidth: 1,
+        scale: .1, // scale: .0043,
+        shiftX: 9,
+        shiftY: 7,
+        symmetrical: true,
+        showRects: 0,
+        showCssRects: true,
+        showSvgRects: true,
+        showBorder: true,
+        showSvgFrame: true,
+        showOnlyOneRect: false,
+        animate: true,
+        demoMode: true,
+    };
+
+    // const demoOptions2: Options = {
+    //     showControls: true,
+    //     shapes: 18,
+    //     borderWidth: 1,
+    //     scale: .0947,
+    //     shiftX: 20,
+    //     shiftY: 6,
+    //     symmetrical: true,
+    //     showRects: 0,
+    //     showCssRects: false,
+    //     showSvgRects: true,
+    //     showBorder: true,
+    //     showSvgFrame: true,
+    //     showOnlyOneRect: true,
+    //     animate: true,
+    //     demoMode: true,
+    // };
+
+    //#endregion types
+
     //#region local utils
 
     function assignToReactive(toObj, fromObj) {
@@ -206,60 +287,6 @@
         '#004d40',
     ];
 
-    const defaultOptions = {
-        showControls: true,
-        shapes: 1,
-        borderWidth: 1,
-        scale: .1,
-        shiftX: 20,
-        shiftY: 20,
-        symmetrical: true,
-        showRects: 0, // 0 - none; 1 - CSS; 2 - SVG
-        showCssRects: true,
-        showSvgRects: true,
-        showBorder: true,
-        showSvgFrame: true,
-        showOnlyOneRect: true,
-        animate: false,
-        demoMode: false,
-    };
-
-    const demoOptions = {
-        showControls: true,
-        shapes: 10,
-        borderWidth: 1,
-        scale: .1, // scale: .0043,
-        shiftX: 9,
-        shiftY: 7,
-        symmetrical: true,
-        showRects: 0,
-        showCssRects: true,
-        showSvgRects: true,
-        showBorder: true,
-        showSvgFrame: true,
-        showOnlyOneRect: false,
-        animate: true,
-        demoMode: true,
-    };
-
-    // const demoOptions2 = {
-    //     showControls: true,
-    //     shapes: 18,
-    //     borderWidth: 1,
-    //     scale: .0947,
-    //     shiftX: 20,
-    //     shiftY: 6,
-    //     symmetrical: true,
-    //     showRects: 0,
-    //     showCssRects: false,
-    //     showSvgRects: true,
-    //     showBorder: true,
-    //     showSvgFrame: true,
-    //     showOnlyOneRect: true,
-    //     animate: true,
-    //     demoMode: true,
-    // };
-
     //#endregion local utils
 
     export default {
@@ -267,7 +294,7 @@
             const generatedCss = ref('23% 77% 82% 18% / 59% 21% 79% 41%'); // ref(generateShape(true)); // TODO: allow edit: '10% 90% 28% 72% / 20% 58% 42% 80%'
             const generatedTxt = computed(() => generatedCss.value ? `border-radius: ${generatedCss.value}` : '');
 
-            let options = reactive(defaultOptions);
+            let options: Options = reactive(defaultOptions);
 
             options.demoMode && (options = reactive(demoOptions));
 
@@ -285,15 +312,15 @@
                 return options.shapes == 1 ? paletteTeal[0] : paletteTeal[idx % paletteTeal.length];
             }
 
-            const dash = ref(0);
+            const dash = ref(false);
 
             function onGenerate() {
                 let mk = [...document.querySelectorAll('.svg-marker ellipse')];
                 console.log({mk});
                 //mk.forEach((_) => _.style.animatation = 'none');
 
-                dash.value = 0; // cancel prev animation
-                nextTick(() => dash.value = 1);
+                dash.value = false; // cancel prev animation
+                nextTick(() => dash.value = true);
 
                 generatedCss.value = generateShape(options.symmetrical);
             }
@@ -301,7 +328,6 @@
             let corners = computed(() => generateCorners(generatedCss.value));
 
             let timerID;
-
             function onAnimate() {
                 if (options.animate) {
                     if (timerID) {
@@ -317,7 +343,6 @@
             }
 
             let currentOptions: any = defaultOptions;
-
             function onDemoMode(event) {
                 if (options.demoMode) {
                     currentOptions = filterKeys(nonReactive(options), ['demoMode']);
@@ -332,11 +357,6 @@
                 return v.replace('%', '');
             }
 
-            function end() {
-                dash.value = 0;
-                console.log('aa2');
-            }
-
             return {
                 options,
                 generatedCss,
@@ -348,7 +368,6 @@
                 onDemoMode,
                 corners,
                 woPersent,
-                end,
                 dash,
             };
         }
