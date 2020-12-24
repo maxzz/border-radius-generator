@@ -112,6 +112,16 @@
 
                     <div class="control-row">
                         <label class="toggle-showborder">Show borders<input type="checkbox" v-model="options.showBorder">
+
+                            <div v-show="options.showBorder" class="corners-legend">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" height="12px">
+                                    <polygon class="legend-tl" points="0 0 0 10 4 10 4 4 10 4 10 0 0 0"><title>top-left</title></polygon>
+                                    <polygon class="legend-tr" points="14 0 14 4 20 4 20 10 24 10 24 0 14 0"><title>top-right</title></polygon>
+                                    <polygon class="legend-br" points="20 20 14 20 14 24 24 24 24 14.01 20 14.01 20 20"><title>bottom-right</title></polygon>
+                                    <polygon class="legend-bl" points="4 14.01 0 14.01 0 24 10 24 10 20 4 20 4 14.01"><title>bottom-left</title></polygon>
+                                </svg>
+                            </div>
+
                             <div v-show="options.showBorder" class="legend">
                                 <span class="legend-tl" title="top-left">T-L</span>
                                 <span class="legend-tr" title="top-right">T-R</span>
@@ -536,7 +546,7 @@
         }
 
         fieldset {
-            padding: .4em 1em .4em 1.4em;
+            padding: .4em 1em .8em 1.4em;
             border: 1px solid #888;
             border-radius: 3px;
 
@@ -589,6 +599,28 @@
             display: grid;
         }
     }
+
+    .corners-legend svg polygon {
+
+        $marker-opacity: 0;
+        
+        &.legend-tl {
+            fill: transparentize($border-tl, $marker-opacity);
+        }
+
+        &.legend-tr {
+            fill: transparentize($border-tr, $marker-opacity);
+        }
+
+        &.legend-br {
+            fill: transparentize($border-br, $marker-opacity);
+        }
+
+        &.legend-bl {
+            fill: transparentize($border-bl, $marker-opacity);
+        }
+    }
+
 </style>
 
 <style lang="scss">
